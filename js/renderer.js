@@ -30,11 +30,37 @@
         }
 
         initDice() {
+            if (!this.diceEl) return;
+
             this.diceEl.innerHTML = "";
             for (let i = 0; i < 9; i++) {
                 const pip = document.createElement("span");
                 pip.className = "pip";
                 this.diceEl.appendChild(pip);
+            }
+        }
+
+        applyThemeStyles(theme) {
+            const palette = theme.ui?.palette || {};
+            const fontFamily = theme.ui?.fontFamily || "Segoe UI, Arial, sans-serif";
+
+            document.body.style.fontFamily = fontFamily;
+            document.body.style.background = `radial-gradient(circle at top, ${palette.panel || "#151545"} 0%, ${palette.background || "#0a0a1a"} 60%)`;
+
+            document.documentElement.style.setProperty("--accent", palette.primary || "#7c4dff");
+            document.documentElement.style.setProperty("--gold", palette.secondary || "#ffd54f");
+            document.documentElement.style.setProperty("--bg", palette.background || "#0a0a1a");
+            document.documentElement.style.setProperty("--panel", palette.panel || "#101033ee");
+            document.documentElement.style.setProperty("--theme-accent-2", palette.accent || "#4caf50");
+
+            if (this.rollBtn) {
+                this.rollBtn.textContent = theme.texts?.rollButton || "Tira el dau";
+                this.rollBtn.style.background = palette.primary || "";
+                this.rollBtn.style.boxShadow = `0 4px 20px ${(palette.primary || "#7c4dff")}55`;
+            }
+
+            if (this.turnColorEl) {
+                this.turnColorEl.style.borderColor = palette.secondary || "#ffffff";
             }
         }
 
@@ -47,23 +73,27 @@
         showGameScreen(theme) {
             this.screenHome.style.display = "none";
             this.screenGame.style.display = "flex";
-            this.gameTitleEl.textContent = theme.title;
-            this.gameEmojiEl.textContent = theme.emoji;
-            this.gameSubtitleEl.textContent = theme.subtitle;
+
+            this.applyThemeStyles(theme);
+
+            this.gameTitleEl.textContent = theme.meta.title;
+            this.gameEmojiEl.textContent = theme.meta.emoji;
+            this.gameSubtitleEl.textContent = theme.meta.subtitle;
         }
 
         buildBoard(theme, players) {
             const rows = theme.board.rows || 8;
             const cols = theme.board.cols || 8;
-            const cells = theme.board.cells;
-            const inner = theme.board.innerDecorations || ["âœ¨", "ðŸ”¬", "ðŸŒ¿"];
+            const cells = theme.board.cells || [];
+            const inner = theme.ui?.innerDecorations || ["✨", "🔬", "🌿"];
+            const showCellNumbers = theme.ui?.showCellNumbers !== false;
 
             this.boardEl.innerHTML = "";
             this.tokenElements.clear();
 
             const cellMap = new Map();
-            cells.forEach((cell, index) => {
-                cellMap.set(`${cell.row}-${cell.col}`, { ...cell, index });
+            cells.forEach(cell => {
+                cellMap.set(`${cell.row}-${cell.col}`, cell);
             });
 
             for (let row = 1; row <= rows; row++) {
@@ -73,12 +103,13 @@
                     const div = document.createElement("div");
 
                     if (info) {
-                        div.className = `cell ${info.type}`;
+                        div.className = `cell ${this.getCellCssType(info)}`;
                         div.style.gridRow = row;
                         div.style.gridColumn = col;
-                        div.title = `${info.index + 1}: ${info.name}`;
+                        div.title = `${info.index + 1}: ${info.label}`;
+
                         div.innerHTML = `
-                            <span class="cell-number">${info.index + 1}</span>
+                            ${showCellNumbers ? `<span class="cell-number">${info.index + 1}</span>` : ""}
                             <span class="cell-icon">${info.icon}</span>
                             <div class="tokens" id="tokens-${info.index}"></div>
                         `;
@@ -98,22 +129,45 @@
                 token.className = `token j${player.id}`;
                 token.id = `token-${player.id}`;
                 token.title = player.name;
+                token.textContent = player.token || "●";
+
+                token.style.backgroundColor = player.color;
+                token.style.color = "#ffffff";
+                token.style.width = "22px";
+                token.style.height = "22px";
+                token.style.fontSize = "0.8rem";
+                token.style.display = "inline-flex";
+                token.style.alignItems = "center";
+                token.style.justifyContent = "center";
+                token.style.borderRadius = "999px";
+                token.style.border = "2px solid white";
+
                 this.tokenElements.set(player.id, token);
 
                 const startContainer = document.getElementById("tokens-0");
-                if (startContainer) startContainer.appendChild(token);
+                if (startContainer) {
+                    startContainer.appendChild(token);
+                }
             });
+        }
+
+        getCellCssType(cell) {
+            if (cell.type === "effect" && cell.effect?.direction === "backward") return "back";
+            if (cell.type === "effect" && cell.effect?.direction === "forward") return "advance";
+            return cell.type;
         }
 
         moveToken(playerId, position) {
             const token = this.tokenElements.get(playerId);
             const target = document.getElementById(`tokens-${position}`);
-            if (token && target) target.appendChild(token);
+            if (token && target) {
+                target.appendChild(token);
+            }
         }
 
         updateTurn(player, gameActive) {
             if (!player) return;
-            this.turnNameEl.textContent = gameActive ? player.name : "ðŸ† Partida acabada!";
+            this.turnNameEl.textContent = gameActive ? player.name : "🏆 Partida acabada!";
             this.turnColorEl.style.backgroundColor = player.color;
         }
 
@@ -133,10 +187,14 @@
         }
 
         setRollEnabled(enabled) {
-            this.rollBtn.disabled = !enabled;
+            if (this.rollBtn) {
+                this.rollBtn.disabled = !enabled;
+            }
         }
 
         renderDice(value) {
+            if (!this.diceEl) return;
+
             const pips = this.diceEl.querySelectorAll(".pip");
             const patterns = {
                 1: [4],
@@ -148,6 +206,7 @@
             };
 
             const pattern = patterns[value] || [4];
+
             pips.forEach((pip, i) => {
                 pip.style.opacity = pattern.includes(i) ? "1" : "0";
             });
@@ -155,6 +214,11 @@
 
         animateDice(finalValue) {
             return new Promise(resolve => {
+                if (!this.diceEl) {
+                    resolve();
+                    return;
+                }
+
                 this.diceEl.classList.add("rolling");
 
                 let count = 0;
@@ -176,11 +240,34 @@
             });
         }
 
-        askQuestion(questionObj, theme) {
+        askQuestion(questionObj, theme, questionCfg = {}) {
             return new Promise(resolve => {
-                this.modalEmoji.textContent = theme.emoji || "â“";
-                this.modalTitle.textContent = "Pregunta";
-                this.questionText.textContent = questionObj.question;
+                this.modalEmoji.textContent = theme.meta.emoji || "❓";
+                this.modalTitle.textContent = questionObj.category || theme.texts?.questionTitle || "Pregunta";
+
+                let extraHtml = "";
+
+                if (questionObj.difficulty) {
+                    extraHtml += `<div style="margin-top:6px; font-size:0.92rem; opacity:0.9;">Nivell: <strong>${questionObj.difficulty}</strong></div>`;
+                }
+
+                if (questionObj.hint) {
+                    extraHtml += `<div style="margin-top:10px; font-size:0.92rem; opacity:0.92;">💡 Pista: ${questionObj.hint}</div>`;
+                }
+
+                if (questionObj.image) {
+                    extraHtml += `
+                        <div style="margin-top:12px;">
+                            ${questionObj.image} />
+                        </div>
+                    `;
+                }
+
+                this.questionText.innerHTML = `
+                    <div>${questionObj.question}</div>
+                    ${extraHtml}
+                `;
+
                 this.optionsContainer.innerHTML = "";
                 this.resultText.textContent = "";
                 this.resultText.style.color = "white";
@@ -195,18 +282,26 @@
                         const allButtons = this.optionsContainer.querySelectorAll(".btn-opcio");
                         allButtons.forEach(b => (b.disabled = true));
 
-                        if (index === questionObj.correct) {
+                        const isCorrect = index === questionObj.correct;
+
+                        if (isCorrect) {
                             btn.classList.add("correct");
-                            this.resultText.textContent = "âœ… Correcte!";
+                            this.resultText.innerHTML = theme.texts?.correct || "✅ Correcte!";
                             this.resultText.style.color = "#7CFC90";
                         } else {
                             btn.classList.add("wrong");
-                            allButtons[questionObj.correct].classList.add("correct");
-                            this.resultText.textContent = "âŒ Incorrecte!";
+                            if (allButtons[questionObj.correct]) {
+                                allButtons[questionObj.correct].classList.add("correct");
+                            }
+                            this.resultText.innerHTML = theme.texts?.wrong || "❌ Incorrecte!";
                             this.resultText.style.color = "#ff8a80";
                         }
 
-                        setTimeout(() => resolve(index === questionObj.correct), 1500);
+                        if (questionObj.explanation) {
+                            this.resultText.innerHTML += `<br><br><small>${questionObj.explanation}</small>`;
+                        }
+
+                        setTimeout(() => resolve(isCorrect), 1800);
                     });
 
                     this.optionsContainer.appendChild(btn);
@@ -217,12 +312,12 @@
         }
 
         showVictory(player, theme, onPlayAgain) {
-            this.modalEmoji.textContent = "ðŸ†";
-            this.modalTitle.textContent = "ENHORABONA!";
+            this.modalEmoji.textContent = "🏆";
+            this.modalTitle.textContent = theme.texts?.victoryTitle || "ENHORABONA!";
             this.questionText.innerHTML = `
                 <strong>${player.name}</strong><br><br>
-                ${theme.victoryTitle}<br><br>
-                Has completat el recorregut del tema <strong>${theme.title}</strong>.
+                ${theme.meta?.victoryTitle || theme.texts?.victoryText || "Has completat el recorregut."}<br><br>
+                Has completat el recorregut del tema <strong>${theme.meta.title}</strong>.
             `;
 
             this.optionsContainer.innerHTML = "";
@@ -231,7 +326,7 @@
             const btn = document.createElement("button");
             btn.type = "button";
             btn.className = "btn-modal";
-            btn.textContent = "ðŸŽ‰ Tornar a l'inici";
+            btn.textContent = theme.texts?.playAgain || "🎉 Tornar a l'inici";
             btn.addEventListener("click", onPlayAgain);
 
             this.optionsContainer.appendChild(btn);
@@ -242,19 +337,5 @@
             this.modalOverlay.classList.add("active");
         }
 
-        closeModal() {
-            this.modalOverlay.classList.remove("active");
-        }
-    }
-
-    window.GameRenderer = GameRenderer;
-})();
-
-
-
-
-
-
-
-
-
+        closeModal()
+            
