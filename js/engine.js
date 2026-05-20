@@ -39,7 +39,7 @@
 
             this.renderer.showGameScreen(this.theme);
             this.renderer.buildBoard(this.theme, this.players);
-            this.renderer.resetLog(`ðŸ ComenÃ§a l'aventura de ${this.theme.title.toLowerCase()}!`);
+            this.renderer.resetLog(`🏁 Comença l'aventura de ${this.theme.title.toLowerCase()}!`);
             this.renderer.updateTurn(this.players[this.currentTurn], true);
             this.renderer.renderDice(1);
             this.renderer.setRollEnabled(true);
@@ -60,7 +60,7 @@
             await this.renderer.animateDice(value);
 
             const player = this.players[this.currentTurn];
-            this.renderer.addLog(`${player.name} ha tret un <strong>${value}</strong> ðŸŽ²`);
+            this.renderer.addLog(`${player.name} ha tret un <strong>${value}</strong> 🎲`);
 
             await this.movePlayerStepByStep(player, value);
 
@@ -114,7 +114,7 @@
 
                 case "advance":
                     this.renderer.addLog(
-                        `ðŸ’« <strong>${player.name}</strong> cau en <em>${cell.name}</em> i avanÃ§a ${advanceSteps} caselles.`
+                        `💫 <strong>${player.name}</strong> cau en <em>${cell.name}</em> i avança ${advanceSteps} caselles.`
                     );
                     await this.movePlayerStepByStep(player, advanceSteps);
 
@@ -128,7 +128,7 @@
 
                 case "back": {
                     this.renderer.addLog(
-                        `ðŸ•³ï¸ <strong>${player.name}</strong> cau en <em>${cell.name}</em> i retrocedeix ${backSteps} caselles.`
+                        `🕳️ <strong>${player.name}</strong> cau en <em>${cell.name}</em> i retrocedeix ${backSteps} caselles.`
                     );
                     const newPosition = Math.max(0, player.position - backSteps);
                     player.position = newPosition;
@@ -145,7 +145,7 @@
                 }
 
                 case "start":
-                    this.renderer.addLog(`ðŸš€ <strong>${player.name}</strong> Ã©s a la sortida.`);
+                    this.renderer.addLog(`🚀 <strong>${player.name}</strong> és a la sortida.`);
                     break;
 
                 case "goal":
@@ -157,7 +157,7 @@
 
         async handleQuestion(player) {
             this.waitingAnswer = true;
-            this.renderer.addLog(`â“ <strong>${player.name}</strong> ha de respondre una pregunta.`);
+            this.renderer.addLog(`❓ <strong>${player.name}</strong> ha de respondre una pregunta.`);
 
             const question = this.getRandomQuestion();
             const correct = await this.renderer.askQuestion(question, this.theme);
@@ -169,7 +169,7 @@
 
             if (correct) {
                 this.renderer.addLog(
-                    `âœ… <strong>${player.name}</strong> encerta i avanÃ§a ${correctAdvance} caselles.`
+                    `✅ <strong>${player.name}</strong> encerta i avança ${correctAdvance} caselles.`
                 );
                 await this.movePlayerStepByStep(player, correctAdvance);
 
@@ -181,7 +181,7 @@
                 }
             } else {
                 this.renderer.addLog(
-                    `âŒ <strong>${player.name}</strong> falla i retrocedeix ${wrongBack} caselles.`
+                    `❌ <strong>${player.name}</strong> falla i retrocedeix ${wrongBack} caselles.`
                 );
                 player.position = Math.max(0, player.position - wrongBack);
                 this.renderer.moveToken(player.id, player.position);
@@ -221,7 +221,7 @@
         async win(player) {
             this.gameActive = false;
             this.renderer.setRollEnabled(false);
-            this.renderer.addLog(`ðŸ† <strong>${player.name}</strong> ha guanyat la partida!`);
+            this.renderer.addLog(`🏆 <strong>${player.name}</strong> ha guanyat la partida!`);
             this.renderer.updateTurn(player, false);
 
             this.renderer.showVictory(player, this.theme, () => {
@@ -251,3 +251,5 @@
 
 
 
+
+                    
