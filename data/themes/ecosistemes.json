@@ -1,146 +1,493 @@
-
-
 {
-  "id": "ecosistemes",
-  "title": "ECOCURSA",
-  "subtitle": "Descobreix com funcionen els ecosistemes.",
-  "emoji": "🌿",
-  "shortDescription": "Tema sobre ecosistemes, biodiversitat i relacions tròfiques.",
-  "victoryTitle": "Has assolit l'equilibri ecològic!",
-  "innerDecorations": ["🌳", "🦊", "🌊", "☀️", "🍃", "🦉", "🐝", "🍄"],
-  "rules": {
-    "correctAdvance": 2,
-    "wrongBack": 2,
-    "specialAdvance": 3,
-    "specialBack": 3,
-    "exactGoalRequired": false
+  "version": 2,
+  "meta": {
+    "id": "ecosistemes",
+    "title": "ECOCURSA",
+    "subtitle": "Recorre els ecosistemes i entén com funcionen.",
+    "emoji": "🌿",
+    "description": "Preguntes sobre éssers vius, medi, cadenes tròfiques i equilibri ecològic.",
+    "victoryTitle": "Has equilibrat l'ecosistema!"
   },
-  "items": [
-    ["🌱", "Inici del bosc"],
-    ["🌿", "Plantes productores"],
-    ["☀️", "Energia solar"],
-    ["❓", "Cadena alimentària"],
-    ["💧", "Cicle de l'aigua"],
-    ["🌬️", "Vent favorable"],
-    ["🦊", "Consumidor"],
-    ["❓", "Relacions ecològiques"],
-    ["🌳", "Bosc madur"],
-    ["🔥", "Incendi forestal"],
-    ["🪱", "Descomponedors"],
-    ["❓", "Nivells tròfics"],
-    ["🦋", "Pol·linització"],
-    ["🌈", "Pluja nutritiva"],
-    ["🐟", "Ecosistema aquàtic"],
-    ["❓", "Biodiversitat"],
-    ["🪨", "Sòl"],
-    ["🗑️", "Contaminació"],
-    ["🦉", "Fauna nocturna"],
-    ["❓", "Adaptacions"],
-    ["🌊", "Riu"],
-    ["🌬️", "Recuperació natural"],
-    ["🐝", "Pol·linitzadors"],
-    ["❓", "Espècies invasores"],
-    ["🍄", "Fongs"],
-    ["🗑️", "Residus tòxics"],
-    ["🌎", "Equilibri natural"],
-    ["🏆", "Equilibri ecològic"]
-  ],
-  "questions": [
-    {
-      "question": "Què és un productor en un ecosistema?",
-      "options": [
-        "Un ésser viu que fabrica el seu aliment",
-        "Un animal depredador",
-        "Un fong descomponedor",
-        "Un objecte sense vida"
-      ],
-      "correct": 0
+  "ui": {
+    "palette": {
+      "primary": "#2e7d32",
+      "secondary": "#ffd54f",
+      "accent": "#0288d1",
+      "background": "#08160a",
+      "panel": "#12301a"
     },
-    {
-      "question": "Què és la biodiversitat?",
-      "options": [
-        "La varietat d'éssers vius d'un lloc",
-        "Només el nombre d'arbres",
-        "La temperatura del sòl",
-        "La quantitat de roques"
-      ],
-      "correct": 0
-    },
-    {
-      "question": "Els descomponedors...",
-      "options": [
-        "Transformen restes orgàniques en nutrients",
-        "Fan fotosíntesi",
-        "Són sempre depredadors",
-        "No formen part dels ecosistemes"
-      ],
-      "correct": 0
-    },
-    {
-      "question": "Quina és la font principal d'energia de molts ecosistemes?",
-      "options": ["La Lluna", "El Sol", "El vent", "Les roques"],
-      "correct": 1
-    },
-    {
-      "question": "Una cadena alimentària mostra...",
-      "options": [
-        "Qui es menja qui",
-        "Només animals herbívors",
-        "Només plantes",
-        "La pluja anual"
-      ],
-      "correct": 0
-    },
-    {
-      "question": "Què pot reduir la biodiversitat?",
-      "options": ["Protegir hàbitats", "La contaminació", "La reforestació", "L'educació ambiental"],
-      "correct": 1
-    },
-    {
-      "question": "Una espècie invasora és...",
-      "options": [
-        "Una espècie introduïda que altera l'ecosistema",
-        "Una espècie microscòpica",
-        "Una espècie extingida",
-        "Una planta medicinal"
-      ],
-      "correct": 0
-    },
-    {
-      "question": "Els herbívors són...",
-      "options": [
-        "Consumidors que mengen plantes",
-        "Productors",
-        "Descomponedors",
-        "Bacteris"
-      ],
-      "correct": 0
-    },
-    {
-      "question": "El sòl és important perquè...",
-      "options": [
-        "Aporta suport i nutrients a moltes plantes",
-        "Només serveix per caminar",
-        "No té vida",
-        "Substitueix el Sol"
-      ],
-      "correct": 0
-    },
-    {
-      "question": "Quan un ecosistema està en equilibri...",
-      "options": [
-        "Les relacions entre éssers vius i medi funcionen de manera estable",
-        "No hi ha cap animal",
-        "Sempre plou",
-        "No hi ha canvis mai"
-      ],
-      "correct": 0
+    "innerDecorations": ["🌿", "🐾", "🍄", "☀️", "💧", "🪲"],
+    "showCellNumbers": true,
+    "fontFamily": "Segoe UI, Arial, sans-serif"
+  },
+  "players": {
+    "min": 2,
+    "max": 4,
+    "presets": [
+      { "name": "Equip Bosc", "color": "#e53935", "token": "🌲" },
+      { "name": "Equip Riu", "color": "#1e88e5", "token": "💧" },
+      { "name": "Equip Sol", "color": "#fbc02d", "token": "☀️" },
+      { "name": "Equip Fauna", "color": "#8e24aa", "token": "🦊" }
+    ]
+  },
+  "rules": {
+    "exactGoalRequired": false,
+    "bounceOnOverflow": true,
+    "defaultCorrectAdvance": 2,
+    "defaultWrongBack": 2,
+    "resolveOrder": "question-then-effect"
+  },
+  "texts": {
+    "startLog": "🌿 Comença l'exploració dels ecosistemes!",
+    "questionTitle": "Pregunta ecològica",
+    "correct": "✅ Bona observació!",
+    "wrong": "❌ Reviseu les relacions ecològiques.",
+    "victoryTitle": "🏆 ECOSISTEMA EQUILIBRAT!",
+    "victoryText": "Heu completat el recorregut ecològic.",
+    "rollButton": "Tira el dau ecològic",
+    "playAgain": "🍃 Tornar a l'inici"
+  },
+  "questionPolicy": {
+    "mode": "all-except",
+    "defaultPool": "general",
+    "includeTypes": ["normal", "effect", "question"],
+    "excludeTypes": ["start", "goal"],
+    "excludeIndexes": [],
+    "everyNthCell": null,
+    "probability": 1,
+    "overrides": {
+      "3": { "ask": true, "pool": "general" },
+      "7": { "ask": true, "pool": "trofica" },
+      "11": { "ask": true, "pool": "descomposicio" },
+      "15": { "ask": true, "pool": "habitat" },
+      "19": { "ask": true, "pool": "general" },
+      "23": { "ask": true, "pool": "relacions" },
+      "26": { "ask": true, "pool": "sostenibilitat" }
     }
-  ]
+  },
+  "board": {
+    "rows": 8,
+    "cols": 8,
+    "path": "standard-8x8-ring",
+    "cells": [
+      {
+        "icon": "🌍",
+        "label": "Sortida",
+        "type": "start",
+        "message": "Comença l'aventura ecològica."
+      },
+      {
+        "icon": "☀️",
+        "label": "Llum solar",
+        "type": "normal"
+      },
+      {
+        "icon": "🌱",
+        "label": "Productors",
+        "type": "normal"
+      },
+      {
+        "icon": "❓",
+        "label": "Base ecològica",
+        "type": "question",
+        "question": { "pool": "general" }
+      },
+      {
+        "icon": "🐛",
+        "label": "Consumidor primari",
+        "type": "normal"
+      },
+      {
+        "icon": "🌧️",
+        "label": "Pluja favorable",
+        "type": "effect",
+        "effect": {
+          "kind": "move",
+          "steps": 2,
+          "direction": "forward"
+        },
+        "message": "🌧️ Bones condicions per a l'ecosistema!"
+      },
+      {
+        "icon": "🐸",
+        "label": "Consumidor secundari",
+        "type": "normal"
+      },
+      {
+        "icon": "❓",
+        "label": "Cadena tròfica",
+        "type": "question",
+        "question": { "pool": "trofica" }
+      },
+      {
+        "icon": "🦊",
+        "label": "Depredador",
+        "type": "normal"
+      },
+      {
+        "icon": "🔥",
+        "label": "Incendi",
+        "type": "effect",
+        "effect": {
+          "kind": "move",
+          "steps": 3,
+          "direction": "backward"
+        },
+        "message": "🔥 Un incendi altera l'equilibri."
+      },
+      {
+        "icon": "🍄",
+        "label": "Descomponedors",
+        "type": "normal"
+      },
+      {
+        "icon": "❓",
+        "label": "Reciclatge de matèria",
+        "type": "question",
+        "question": { "pool": "descomposicio" }
+      },
+      {
+        "icon": "💧",
+        "label": "Aigua",
+        "type": "normal"
+      },
+      {
+        "icon": "🌤️",
+        "label": "Temps favorable",
+        "type": "effect",
+        "effect": {
+          "kind": "move",
+          "steps": 2,
+          "direction": "forward"
+        }
+      },
+      {
+        "icon": "🌲",
+        "label": "Bosc",
+        "type": "normal"
+      },
+      {
+        "icon": "❓",
+        "label": "Hàbitat",
+        "type": "question",
+        "question": { "pool": "habitat" }
+      },
+      {
+        "icon": "🐟",
+        "label": "Riu",
+        "type": "normal"
+      },
+      {
+        "icon": "🧪",
+        "label": "Contaminació",
+        "type": "effect",
+        "effect": {
+          "kind": "move",
+          "steps": 2,
+          "direction": "backward"
+        }
+      },
+      {
+        "icon": "🪺",
+        "label": "Nínxol ecològic",
+        "type": "normal"
+      },
+      {
+        "icon": "❓",
+        "label": "Equilibri natural",
+        "type": "question",
+        "question": { "pool": "general" }
+      },
+      {
+        "icon": "🦋",
+        "label": "Biodiversitat",
+        "type": "normal"
+      },
+      {
+        "icon": "🌿",
+        "label": "Vegetació abundant",
+        "type": "effect",
+        "effect": {
+          "kind": "move",
+          "steps": 2,
+          "direction": "forward"
+        }
+      },
+      {
+        "icon": "🦉",
+        "label": "Fauna nocturna",
+        "type": "normal"
+      },
+      {
+        "icon": "❓",
+        "label": "Relacions ecològiques",
+        "type": "question",
+        "question": { "pool": "relacions" }
+      },
+      {
+        "icon": "🏞️",
+        "label": "Paisatge",
+        "type": "normal"
+      },
+      {
+        "icon": "🧪",
+        "label": "Espècie invasora",
+        "type": "effect",
+        "effect": {
+          "kind": "move",
+          "steps": 2,
+          "direction": "backward"
+        }
+      },
+      {
+        "icon": "♻️",
+        "label": "Sostenibilitat",
+        "type": "question",
+        "question": { "pool": "sostenibilitat" }
+      },
+      {
+        "icon": "🏆",
+        "label": "Ecosistema equilibrat",
+        "type": "goal"
+      }
+    ]
+  },
+  "questionPools": {
+    "general": [
+      {
+        "id": "eco-g1",
+        "question": "Què és un ecosistema?",
+        "options": [
+          "Només els animals d'una zona",
+          "Els éssers vius i el medi on interactuen",
+          "Només les plantes",
+          "Una cadena alimentària"
+        ],
+        "correct": 1,
+        "hint": "Inclou éssers vius i factors abiòtics.",
+        "explanation": "Un ecosistema inclou els éssers vius i els factors abiòtics del medi.",
+        "image": "",
+        "bonusIfCorrect": 0,
+        "penaltyIfWrong": 0
+      },
+      {
+        "id": "eco-g2",
+        "question": "Què significa biodiversitat?",
+        "options": [
+          "Quantitat d'aigua d'un hàbitat",
+          "Varietat d'éssers vius en un ecosistema",
+          "Número de depredadors",
+          "Temperatura d'un medi"
+        ],
+        "correct": 1,
+        "hint": "Parla de varietat de vida.",
+        "explanation": "La biodiversitat és la varietat d'espècies i formes de vida d'un ecosistema.",
+        "image": "",
+        "bonusIfCorrect": 0,
+        "penaltyIfWrong": 0
+      },
+      {
+        "id": "eco-g3",
+        "question": "Quina acció ajuda a conservar els ecosistemes?",
+        "options": [
+          "Abocar residus",
+          "Desforestar",
+          "Reduir, reutilitzar i reciclar",
+          "Introduir espècies invasores"
+        ],
+        "correct": 2,
+        "hint": "Pensa en les 3R.",
+        "explanation": "Les pràctiques sostenibles ajuden a mantenir l'equilibri ecològic.",
+        "image": "",
+        "bonusIfCorrect": 0,
+        "penaltyIfWrong": 0
+      }
+    ],
+    "trofica": [
+      {
+        "id": "eco-t1",
+        "question": "Quins organismes són productors?",
+        "options": [
+          "Les plantes",
+          "Els fongs",
+          "Els depredadors",
+          "Els insectes"
+        ],
+        "correct": 0,
+        "hint": "Fan fotosíntesi.",
+        "explanation": "Les plantes són productors perquè fabriquen matèria orgànica a partir de l'energia solar.",
+        "image": "",
+        "bonusIfCorrect": 0,
+        "penaltyIfWrong": 0
+      },
+      {
+        "id": "eco-t2",
+        "question": "Què és una cadena tròfica?",
+        "options": [
+          "Una relació d'alimentació entre éssers vius",
+          "Un tipus de roca",
+          "Una forma de reproducció",
+          "Una migració"
+        ],
+        "correct": 0,
+        "hint": "Mostra qui es menja qui.",
+        "explanation": "La cadena tròfica representa les relacions d'alimentació dins d'un ecosistema.",
+        "image": "",
+        "bonusIfCorrect": 0,
+        "penaltyIfWrong": 0
+      },
+      {
+        "id": "eco-t3",
+        "question": "Quin és un consumidor primari?",
+        "options": [
+          "Un herbívor",
+          "Un descomponedor",
+          "Una planta",
+          "Un depredador superior"
+        ],
+        "correct": 0,
+        "hint": "S'alimenta de productors.",
+        "explanation": "Els consumidors primaris s'alimenten directament dels productors.",
+        "image": "",
+        "bonusIfCorrect": 0,
+        "penaltyIfWrong": 0
+      }
+    ],
+    "descomposicio": [
+      {
+        "id": "eco-d1",
+        "question": "Quina funció tenen els descomponedors?",
+        "options": [
+          "Produir llum",
+          "Reciclar la matèria orgànica",
+          "Caçar herbívors",
+          "Fer fotosíntesi"
+        ],
+        "correct": 1,
+        "hint": "Transformen restes en nutrients.",
+        "explanation": "Els descomponedors transformen restes orgàniques en nutrients aprofitables.",
+        "image": "",
+        "bonusIfCorrect": 0,
+        "penaltyIfWrong": 0
+      },
+      {
+        "id": "eco-d2",
+        "question": "Quin grup és un bon exemple de descomponedors?",
+        "options": [
+          "Fongs i bacteris",
+          "Ocells i peixos",
+          "Plantes i arbres",
+          "Rèptils i amfibis"
+        ],
+        "correct": 0,
+        "hint": "Actuen sobre matèria morta.",
+        "explanation": "Fongs i bacteris són descomponedors essencials en els ecosistemes.",
+        "image": "",
+        "bonusIfCorrect": 0,
+        "penaltyIfWrong": 0
+      }
+    ],
+    "habitat": [
+      {
+        "id": "eco-h1",
+        "question": "Què és un hàbitat?",
+        "options": [
+          "El lloc on viu un organisme",
+          "La seva alimentació",
+          "La seva mida",
+          "El seu depredador"
+        ],
+        "correct": 0,
+        "hint": "És el seu lloc de vida.",
+        "explanation": "L'hàbitat és l'espai on viu una espècie i on troba les condicions necessàries.",
+        "image": "",
+        "bonusIfCorrect": 0,
+        "penaltyIfWrong": 0
+      },
+      {
+        "id": "eco-h2",
+        "question": "Què és el nínxol ecològic?",
+        "options": [
+          "El color d'un animal",
+          "La funció que té una espècie dins l'ecosistema",
+          "La mida del bosc",
+          "Una estació de l'any"
+        ],
+        "correct": 1,
+        "hint": "És el paper que té dins l'ecosistema.",
+        "explanation": "El nínxol ecològic descriu el paper i les relacions d'una espècie amb el medi.",
+        "image": "",
+        "bonusIfCorrect": 0,
+        "penaltyIfWrong": 0
+      }
+    ],
+    "relacions": [
+      {
+        "id": "eco-r1",
+        "question": "Quina és una relació de depredació?",
+        "options": [
+          "Un depredador caça una presa",
+          "Dues plantes creixen juntes",
+          "Un fong descompon una fulla",
+          "Una roca s'erosiona"
+        ],
+        "correct": 0,
+        "hint": "Un organisme captura un altre per alimentar-se.",
+        "explanation": "La depredació és una relació en què un organisme caça i menja un altre.",
+        "image": "",
+        "bonusIfCorrect": 0,
+        "penaltyIfWrong": 0
+      },
+      {
+        "id": "eco-r2",
+        "question": "Què passa si desapareix una espècie clau d'un ecosistema?",
+        "options": [
+          "No canvia res",
+          "Es pot alterar l'equilibri de tot l'ecosistema",
+          "Només canvia el clima",
+          "Augmenta sempre la biodiversitat"
+        ],
+        "correct": 1,
+        "hint": "Els ecosistemes estan connectats.",
+        "explanation": "La desaparició d'una espècie clau pot afectar moltes altres relacions i l'equilibri general.",
+        "image": "",
+        "bonusIfCorrect": 0,
+        "penaltyIfWrong": 0
+      }
+    ],
+    "sostenibilitat": [
+      {
+        "id": "eco-s1",
+        "question": "Què és una espècie invasora?",
+        "options": [
+          "Una espècie que ajuda sempre l'ecosistema",
+          "Una espècie introduïda que pot alterar l'equilibri",
+          "Una espècie en perill d'extinció",
+          "Una espècie autòctona"
+        ],
+        "correct": 1,
+        "hint": "No és pròpia del lloc i pot causar problemes.",
+        "explanation": "Les espècies invasores poden desplaçar espècies autòctones i alterar l'ecosistema.",
+        "image": "",
+        "bonusIfCorrect": 0,
+        "penaltyIfWrong": 0
+      },
+      {
+        "id": "eco-s2",
+        "question": "Quina acció és més sostenible?",
+        "options": [
+          "Consumir recursos sense límit",
+          "Reciclar i reduir residus",
+          "Talar tots els arbres d'una zona",
+          "Contaminar rius"
+        ],
+        "correct": 1,
+        "hint": "Implica reduir l'impacte ambiental.",
+        "explanation": "Reciclar i reduir residus ajuda a conservar recursos i protegir els ecosistemes.",
+        "image": "",
+        "bonusIfCorrect": 0,
+        "penaltyIfWrong": 0
+      }
+    ]
+  }
 }
-
-
-
-
-
-
