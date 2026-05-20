@@ -1,142 +1,452 @@
-
-
 {
-  "id": "exoplanetes",
-  "title": "EXOCURSA",
-  "subtitle": "Viatja per la galàxia descobrint exoplanetes.",
-  "emoji": "🪐",
-  "shortDescription": "Preguntes i recorregut sobre astronomia i exoplanetes.",
-  "victoryTitle": "Has arribat a l'exoplaneta habitable!",
-  "innerDecorations": ["🌟", "🌌", "🪐", "⭐", "🔭", "✨", "🛰️", "☄️"],
-  "rules": {
-    "correctAdvance": 2,
-    "wrongBack": 2,
-    "specialAdvance": 3,
-    "specialBack": 3,
-    "exactGoalRequired": false
+  "version": 2,
+  "meta": {
+    "id": "exoplanetes",
+    "title": "EXOCURSA",
+    "subtitle": "Viatja per la galàxia descobrint exoplanetes.",
+    "emoji": "🪐",
+    "description": "Preguntes i recorregut sobre astronomia i exoplanetes.",
+    "victoryTitle": "Has arribat a l'exoplaneta habitable!"
   },
-  "items": [
-    ["🚀", "Sortida (Terra)"],
-    ["🌍", "Espai profund"],
-    ["✨", "Nebulosa"],
-    ["❓", "Estació de recerca"],
-    ["🌌", "Via Làctia"],
-    ["💫", "Supernova impulsora"],
-    ["🔭", "Observatori"],
-    ["❓", "Base Kepler"],
-    ["⭐", "Estrella binària"],
-    ["🕳️", "Forat negre"],
-    ["🪐", "Gegant gasós"],
-    ["❓", "Laboratori TESS"],
-    ["☄️", "Cinturó d'asteroides"],
-    ["💫", "Vent estel·lar"],
-    ["🌠", "Estel fugaç"],
-    ["❓", "Mòdul científic"],
-    ["🛰️", "Satèl·lit"],
-    ["🕳️", "Forat de cuc inestable"],
-    ["🌑", "Planeta rocós"],
-    ["❓", "Centre de dades"],
-    ["💧", "Zona habitable"],
-    ["💫", "Raig còsmic"],
-    ["🧊", "Planeta gelat"],
-    ["❓", "Arxiu astronòmic"],
-    ["🔥", "Júpiter calent"],
-    ["🕳️", "Gravetat extrema"],
-    ["🧬", "Biomarcadors"],
-    ["🏆", "Exoplaneta habitable"]
-  ],
-  "questions": [
-    {
-      "question": "Què és un exoplaneta?",
-      "options": [
-        "Un planeta del sistema solar",
-        "Un planeta que orbita una altra estrella",
-        "Una estrella petita",
-        "Un satèl·lit artificial"
-      ],
-      "correct": 1
+  "ui": {
+    "palette": {
+      "primary": "#283593",
+      "secondary": "#ffca28",
+      "accent": "#26a69a",
+      "background": "#090b1a",
+      "panel": "#151937"
     },
-    {
-      "question": "Quin telescopi ha descobert molts exoplanetes?",
-      "options": ["Kepler", "Apollo", "Sputnik", "Voyager"],
-      "correct": 0
-    },
-    {
-      "question": "Quin mètode detecta un planeta quan passa davant de la seva estrella?",
-      "options": ["Mètode de trànsit", "Mètode sísmic", "Mètode sonar", "Mètode químic"],
-      "correct": 0
-    },
-    {
-      "question": "Què és la zona habitable?",
-      "options": [
-        "La zona més freda de l'estrella",
-        "La regió on podria existir aigua líquida",
-        "La part interior del planeta",
-        "La corona solar"
-      ],
-      "correct": 1
-    },
-    {
-      "question": "Què és un Júpiter calent?",
-      "options": [
-        "Un cometa molt gran",
-        "Un gegant gasós molt a prop de la seva estrella",
-        "Un planeta de gel",
-        "Una estrella petita"
-      ],
-      "correct": 1
-    },
-    {
-      "question": "Quina característica és clau per a la vida tal com la coneixem?",
-      "options": ["Anells", "Aigua líquida", "Moltes llunes", "Color blau"],
-      "correct": 1
-    },
-    {
-      "question": "Per què costa veure exoplanetes directament?",
-      "options": [
-        "Són massa llunyans i la llum de l'estrella els enlluerna",
-        "No existeixen",
-        "Tenen llum pròpia molt intensa",
-        "Només es veuen de dia"
-      ],
-      "correct": 0
-    },
-    {
-      "question": "Pròxima Centauri b és important perquè...",
-      "options": [
-        "És al sistema solar",
-        "És un exoplaneta proper",
-        "És una galàxia",
-        "És un satèl·lit de Mart"
-      ],
-      "correct": 1
-    },
-    {
-      "question": "Què és una superterra?",
-      "options": [
-        "Un planeta rocós més massiu que la Terra",
-        "Un planeta exactament igual a la Terra",
-        "Una estrella gegant",
-        "Un asteroide"
-      ],
-      "correct": 0
-    },
-    {
-      "question": "TESS és una missió dedicada a...",
-      "options": [
-        "Buscar exoplanetes",
-        "Anar a la Lluna",
-        "Estudiar volcans",
-        "Mesurar terratrèmols"
-      ],
-      "correct": 0
+    "innerDecorations": ["🌟", "🌌", "✨", "🛰️", "☄️", "🔭"],
+    "showCellNumbers": true,
+    "fontFamily": "Segoe UI, Arial, sans-serif"
+  },
+  "players": {
+    "min": 2,
+    "max": 4,
+    "presets": [
+      { "name": "Equip Solar", "color": "#e53935", "token": "🚀" },
+      { "name": "Equip Kepler", "color": "#1e88e5", "token": "🔭" },
+      { "name": "Equip TESS", "color": "#43a047", "token": "🛰️" },
+      { "name": "Equip Galàxia", "color": "#fb8c00", "token": "🌌" }
+    ]
+  },
+  "rules": {
+    "exactGoalRequired": false,
+    "bounceOnOverflow": true,
+    "defaultCorrectAdvance": 2,
+    "defaultWrongBack": 2,
+    "resolveOrder": "question-then-effect"
+  },
+  "texts": {
+    "startLog": "🚀 Comença la missió espacial!",
+    "questionTitle": "Pregunta astronòmica",
+    "correct": "✅ Molt bé! Continueu explorant.",
+    "wrong": "❌ Aquesta vegada no, però encara hi sou a temps.",
+    "victoryTitle": "🏆 MISSIÓ COMPLETADA!",
+    "victoryText": "Heu arribat a un exoplaneta habitable.",
+    "rollButton": "Tira el dau espacial",
+    "playAgain": "🌠 Tornar a l'inici"
+  },
+  "questionPolicy": {
+    "mode": "all-except",
+    "defaultPool": "general",
+    "includeTypes": ["normal", "effect", "question"],
+    "excludeTypes": ["start", "goal"],
+    "excludeIndexes": [],
+    "everyNthCell": null,
+    "probability": 1,
+    "overrides": {
+      "3": { "ask": true, "pool": "general" },
+      "7": { "ask": true, "pool": "kepler" },
+      "11": { "ask": true, "pool": "tess" },
+      "15": { "ask": true, "pool": "general" },
+      "19": { "ask": true, "pool": "general" },
+      "23": { "ask": true, "pool": "kepler" },
+      "26": { "ask": true, "pool": "vida" }
     }
-  ]
+  },
+  "board": {
+    "rows": 8,
+    "cols": 8,
+    "path": "standard-8x8-ring",
+    "cells": [
+      {
+        "icon": "🚀",
+        "label": "Sortida (Terra)",
+        "type": "start",
+        "message": "🌍 La missió comença des de la Terra."
+      },
+      {
+        "icon": "🌍",
+        "label": "Espai profund",
+        "type": "normal"
+      },
+      {
+        "icon": "✨",
+        "label": "Nebulosa",
+        "type": "normal"
+      },
+      {
+        "icon": "❓",
+        "label": "Estació de recerca",
+        "type": "question",
+        "question": { "pool": "general" }
+      },
+      {
+        "icon": "🌌",
+        "label": "Via Làctia",
+        "type": "normal"
+      },
+      {
+        "icon": "💫",
+        "label": "Supernova impulsora",
+        "type": "effect",
+        "effect": {
+          "kind": "move",
+          "steps": 3,
+          "direction": "forward"
+        },
+        "message": "💫 Una supernova us impulsa endavant!"
+      },
+      {
+        "icon": "🔭",
+        "label": "Observatori",
+        "type": "normal"
+      },
+      {
+        "icon": "❓",
+        "label": "Base Kepler",
+        "type": "question",
+        "question": { "pool": "kepler" }
+      },
+      {
+        "icon": "⭐",
+        "label": "Estrella binària",
+        "type": "normal"
+      },
+      {
+        "icon": "🕳️",
+        "label": "Forat negre",
+        "type": "effect",
+        "effect": {
+          "kind": "move",
+          "steps": 3,
+          "direction": "backward"
+        },
+        "message": "🕳️ La gravetat us atrapa i retrocediu."
+      },
+      {
+        "icon": "🪐",
+        "label": "Gegant gasós",
+        "type": "normal"
+      },
+      {
+        "icon": "❓",
+        "label": "Laboratori TESS",
+        "type": "question",
+        "question": { "pool": "tess" }
+      },
+      {
+        "icon": "☄️",
+        "label": "Cinturó d'asteroides",
+        "type": "normal"
+      },
+      {
+        "icon": "💫",
+        "label": "Vent estel·lar",
+        "type": "effect",
+        "effect": {
+          "kind": "move",
+          "steps": 2,
+          "direction": "forward"
+        }
+      },
+      {
+        "icon": "🌠",
+        "label": "Estel fugaç",
+        "type": "normal"
+      },
+      {
+        "icon": "❓",
+        "label": "Mòdul científic",
+        "type": "question",
+        "question": { "pool": "general" }
+      },
+      {
+        "icon": "🛰️",
+        "label": "Satèl·lit",
+        "type": "normal"
+      },
+      {
+        "icon": "🕳️",
+        "label": "Forat de cuc inestable",
+        "type": "effect",
+        "effect": {
+          "kind": "move",
+          "steps": 2,
+          "direction": "backward"
+        }
+      },
+      {
+        "icon": "🌑",
+        "label": "Planeta rocós",
+        "type": "normal"
+      },
+      {
+        "icon": "❓",
+        "label": "Centre de dades",
+        "type": "question",
+        "question": { "pool": "general" }
+      },
+      {
+        "icon": "💧",
+        "label": "Zona habitable",
+        "type": "normal"
+      },
+      {
+        "icon": "💫",
+        "label": "Raig còsmic",
+        "type": "effect",
+        "effect": {
+          "kind": "move",
+          "steps": 2,
+          "direction": "forward"
+        }
+      },
+      {
+        "icon": "🧊",
+        "label": "Planeta gelat",
+        "type": "normal"
+      },
+      {
+        "icon": "❓",
+        "label": "Arxiu astronòmic",
+        "type": "question",
+        "question": { "pool": "kepler" }
+      },
+      {
+        "icon": "🔥",
+        "label": "Júpiter calent",
+        "type": "normal"
+      },
+      {
+        "icon": "🕳️",
+        "label": "Gravetat extrema",
+        "type": "effect",
+        "effect": {
+          "kind": "move",
+          "steps": 2,
+          "direction": "backward"
+        }
+      },
+      {
+        "icon": "🧬",
+        "label": "Biomarcadors",
+        "type": "question",
+        "question": { "pool": "vida" }
+      },
+      {
+        "icon": "🏆",
+        "label": "Exoplaneta habitable",
+        "type": "goal"
+      }
+    ]
+  },
+  "questionPools": {
+    "general": [
+      {
+        "id": "exo-g1",
+        "question": "Què és un exoplaneta?",
+        "options": [
+          "Un planeta del sistema solar",
+          "Un planeta que orbita una altra estrella",
+          "Una estrella petita",
+          "Un satèl·lit artificial"
+        ],
+        "correct": 1,
+        "hint": "No és del nostre sistema solar.",
+        "explanation": "Un exoplaneta és un planeta que orbita una estrella diferent del Sol.",
+        "image": "",
+        "bonusIfCorrect": 0,
+        "penaltyIfWrong": 0
+      },
+      {
+        "id": "exo-g2",
+        "question": "Què és la zona habitable?",
+        "options": [
+          "La zona més freda de l'estrella",
+          "La regió on podria existir aigua líquida",
+          "La part interior del planeta",
+          "La corona solar"
+        ],
+        "correct": 1,
+        "hint": "Pensa en l'aigua líquida.",
+        "explanation": "És la distància adequada respecte a una estrella perquè pugui existir aigua líquida.",
+        "image": "",
+        "bonusIfCorrect": 0,
+        "penaltyIfWrong": 0
+      },
+      {
+        "id": "exo-g3",
+        "question": "Per què costa veure exoplanetes directament?",
+        "options": [
+          "Són massa llunyans i la llum de l'estrella els enlluerna",
+          "No existeixen",
+          "Tenen llum pròpia molt intensa",
+          "Només es veuen de dia"
+        ],
+        "correct": 0,
+        "hint": "La llum de l'estrella és el gran problema.",
+        "explanation": "La llum de l'estrella és molt més intensa que la del planeta i en dificulta l'observació directa.",
+        "image": "",
+        "bonusIfCorrect": 0,
+        "penaltyIfWrong": 0
+      },
+      {
+        "id": "exo-g4",
+        "question": "Què és una superterra?",
+        "options": [
+          "Un planeta rocós més massiu que la Terra",
+          "Un planeta exactament igual a la Terra",
+          "Una estrella gegant",
+          "Un asteroide enorme"
+        ],
+        "correct": 0,
+        "hint": "És un tipus de planeta, no una estrella.",
+        "explanation": "Una superterra és un exoplaneta rocós amb més massa que la Terra, però menor que la dels gegants gasosos.",
+        "image": "",
+        "bonusIfCorrect": 0,
+        "penaltyIfWrong": 0
+      }
+    ],
+    "kepler": [
+      {
+        "id": "exo-k1",
+        "question": "Quin telescopi ha descobert molts exoplanetes?",
+        "options": ["Kepler", "Apollo", "Sputnik", "Voyager"],
+        "correct": 0,
+        "hint": "És una missió dedicada a la recerca d'exoplanetes.",
+        "explanation": "La missió Kepler va ser fonamental per descobrir milers de candidats a exoplanetes.",
+        "image": "",
+        "bonusIfCorrect": 0,
+        "penaltyIfWrong": 0
+      },
+      {
+        "id": "exo-k2",
+        "question": "Quin mètode detecta un planeta quan passa davant de la seva estrella?",
+        "options": [
+          "Mètode de trànsit",
+          "Mètode sísmic",
+          "Mètode sonar",
+          "Mètode químic"
+        ],
+        "correct": 0,
+        "hint": "La llum de l'estrella baixa una mica.",
+        "explanation": "El mètode de trànsit detecta petites disminucions de llum quan el planeta passa davant de l'estrella.",
+        "image": "",
+        "bonusIfCorrect": 0,
+        "penaltyIfWrong": 0
+      },
+      {
+        "id": "exo-k3",
+        "question": "Pròxima Centauri b és important perquè...",
+        "options": [
+          "És al sistema solar",
+          "És un exoplaneta proper",
+          "És una galàxia",
+          "És un satèl·lit de Mart"
+        ],
+        "correct": 1,
+        "hint": "La pista és la proximitat.",
+        "explanation": "Pròxima Centauri b és rellevant perquè és un exoplaneta molt proper a la Terra en termes astronòmics.",
+        "image": "",
+        "bonusIfCorrect": 0,
+        "penaltyIfWrong": 0
+      }
+    ],
+    "tess": [
+      {
+        "id": "exo-t1",
+        "question": "TESS és una missió dedicada a...",
+        "options": [
+          "Buscar exoplanetes",
+          "Anar a la Lluna",
+          "Estudiar volcans",
+          "Mesurar terratrèmols"
+        ],
+        "correct": 0,
+        "hint": "També utilitza trànsits per detectar planetes.",
+        "explanation": "TESS observa el cel per detectar exoplanetes al voltant d'estrelles properes.",
+        "image": "",
+        "bonusIfCorrect": 0,
+        "penaltyIfWrong": 0
+      },
+      {
+        "id": "exo-t2",
+        "question": "Quin tipus d'estrelles observa sovint TESS per trobar exoplanetes?",
+        "options": [
+          "Estrelles properes i brillants",
+          "Només estrelles mortes",
+          "Només forats negres",
+          "Només estrelles del sistema solar"
+        ],
+        "correct": 0,
+        "hint": "Li interessen les que són més fàcils d'estudiar després.",
+        "explanation": "TESS se centra molt en estrelles relativament properes i brillants per facilitar l'estudi posterior dels planetes.",
+        "image": "",
+        "bonusIfCorrect": 0,
+        "penaltyIfWrong": 0
+      }
+    ],
+    "vida": [
+      {
+        "id": "exo-v1",
+        "question": "Quina característica és clau per a la vida tal com la coneixem?",
+        "options": [
+          "Anells",
+          "Aigua líquida",
+          "Moltes llunes",
+          "Color blau"
+        ],
+        "correct": 1,
+        "hint": "És essencial en la biologia terrestre.",
+        "explanation": "L'aigua líquida és una de les condicions més importants per a la vida tal com la coneixem.",
+        "image": "",
+        "bonusIfCorrect": 0,
+        "penaltyIfWrong": 0
+      },
+      {
+        "id": "exo-v2",
+        "question": "Què són els biomarcadors?",
+        "options": [
+          "Senyals que podrien indicar vida",
+          "Tipus de satèl·lits",
+          "Partícules d'un estel",
+          "Rajos còsmics"
+        ],
+        "correct": 0,
+        "hint": "Són pistes de possible activitat biològica.",
+        "explanation": "Els biomarcadors són indicis químics o físics que podrien suggerir la presència de vida.",
+        "image": "",
+        "bonusIfCorrect": 0,
+        "penaltyIfWrong": 0
+      },
+      {
+        "id": "exo-v3",
+        "question": "Per què és important buscar atmosferes en exoplanetes?",
+        "options": [
+          "Per veure si hi ha indicis de condicions habitables",
+          "Per canviar-ne la mida",
+          "Per fer-los més brillants",
+          "Per convertir-los en estrelles"
+        ],
+        "correct": 0,
+        "hint": "L'atmosfera pot donar moltes pistes.",
+        "explanation": "L'estudi de l'atmosfera pot revelar composició química, temperatura i possibles indicis d'habitabilitat.",
+        "image": "",
+        "bonusIfCorrect": 0,
+        "penaltyIfWrong": 0
+      }
+    ]
+  }
 }
-
-
-
-
-
-
-
