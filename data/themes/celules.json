@@ -1,132 +1,227 @@
-
-
 {
-  "id": "celules",
-  "title": "CEL·LUCURSA",
-  "subtitle": "Explora la cèl·lula i els seus orgànuls.",
-  "emoji": "🔬",
-  "shortDescription": "Tema sobre cèl·lules, orgànuls i funcions vitals.",
-  "victoryTitle": "Has arribat al nucli cel·lular!",
-  "innerDecorations": ["🧬", "🔬", "🧫", "⚗️", "🧪", "🦠", "🌿", "💧"],
-  "rules": {
-    "correctAdvance": 2,
-    "wrongBack": 2,
-    "specialAdvance": 3,
-    "specialBack": 3,
-    "exactGoalRequired": false
+  "version": 2,
+  "meta": {
+    "id": "exoplanetes",
+    "title": "EXOCURSA",
+    "subtitle": "Viatja per la galàxia descobrint exoplanetes.",
+    "emoji": "🪐",
+    "description": "Preguntes i recorregut sobre astronomia i exoplanetes.",
+    "victoryTitle": "Has arribat a l'exoplaneta habitable!"
   },
-  "items": [
-    ["🧫", "Entrada al laboratori"],
-    ["💧", "Citoplasma"],
-    ["🧬", "Informació genètica"],
-    ["❓", "Membrana cel·lular"],
-    ["🔬", "Observació microscòpica"],
-    ["⚡", "Impuls energètic"],
-    ["🧪", "Reactiu biològic"],
-    ["❓", "Orgànuls"],
-    ["🟣", "Nucli"],
-    ["🧱", "Error de transport"],
-    ["🟢", "Mitocondri"],
-    ["❓", "Ribosomes"],
-    ["📦", "Aparell de Golgi"],
-    ["⚡", "ATP extra"],
-    ["🧵", "Reticle endoplasmàtic"],
-    ["❓", "Vacúol"],
-    ["🌿", "Cloroplast"],
-    ["🧱", "Pèrdua de nutrients"],
-    ["🦠", "Món microscòpic"],
-    ["❓", "Paret cel·lular"],
-    ["💨", "Difusió"],
-    ["⚡", "Transport actiu"],
-    ["🫧", "Vesícula"],
-    ["❓", "ADN"],
-    ["🧫", "Cultiu cel·lular"],
-    ["🧱", "Dany a la membrana"],
-    ["🧬", "Divisió cel·lular"],
-    ["🏆", "Nucli cel·lular"]
-  ],
-  "questions": [
-    {
-      "question": "Quina funció té el nucli?",
-      "options": [
-        "Fer la fotosíntesi",
-        "Controlar l'activitat cel·lular",
-        "Produir sucre",
-        "Fer la digestió"
-      ],
-      "correct": 1
+  "ui": {
+    "palette": {
+      "primary": "#283593",
+      "secondary": "#ffca28",
+      "accent": "#26a69a",
+      "background": "#090b1a",
+      "panel": "#151937"
     },
-    {
-      "question": "Quin orgànul produeix energia per a la cèl·lula?",
-      "options": ["Ribosoma", "Mitocondri", "Nucli", "Membrana"],
-      "correct": 1
-    },
-    {
-      "question": "On es troba l'ADN en una cèl·lula eucariota?",
-      "options": ["Al vacúol", "Al nucli", "A la membrana", "Al citoplasma exterior"],
-      "correct": 1
-    },
-    {
-      "question": "Què fan els ribosomes?",
-      "options": [
-        "Produeixen proteïnes",
-        "Fan la respiració pulmonar",
-        "Guarden aigua",
-        "Produeixen llum"
-      ],
-      "correct": 0
-    },
-    {
-      "question": "La membrana cel·lular serveix per...",
-      "options": [
-        "Controlar què entra i què surt",
-        "Fer fotosíntesi",
-        "Fabricar ADN",
-        "Crear minerals"
-      ],
-      "correct": 0
-    },
-    {
-      "question": "Quin orgànul és típic de les cèl·lules vegetals i fa la fotosíntesi?",
-      "options": ["Mitocondri", "Ribosoma", "Cloroplast", "Lisosoma"],
-      "correct": 2
-    },
-    {
-      "question": "Què és el citoplasma?",
-      "options": [
-        "La part líquida interior on hi ha els orgànuls",
-        "La paret externa rígida",
-        "El material genètic",
-        "El motor del microscopi"
-      ],
-      "correct": 0
-    },
-    {
-      "question": "Quin orgànul modifica, empaqueta i distribueix substàncies?",
-      "options": ["Aparell de Golgi", "Nucli", "Vacúol", "Cili"],
-      "correct": 0
-    },
-    {
-      "question": "Les cèl·lules vegetals tenen...",
-      "options": [
-        "Paret cel·lular",
-        "Només nucli",
-        "Cap membrana",
-        "Cap orgànul"
-      ],
-      "correct": 0
-    },
-    {
-      "question": "El transport actiu necessita...",
-      "options": ["Energia", "Només llum", "Sorra", "Oxigen líquid"],
-      "correct": 0
+    "innerDecorations": ["🌟", "🌌", "✨", "🛰️", "☄️", "🔭"],
+    "showCellNumbers": true,
+    "fontFamily": "Segoe UI, Arial, sans-serif"
+  },
+  "players": {
+    "min": 2,
+    "max": 4,
+    "presets": [
+      { "name": "Equip Solar", "color": "#e53935", "token": "🚀" },
+      { "name": "Equip Kepler", "color": "#1e88e5", "token": "🔭" },
+      { "name": "Equip TESS", "color": "#43a047", "token": "🛰️" },
+      { "name": "Equip Galàxia", "color": "#fb8c00", "token": "🌌" }
+    ]
+  },
+  "rules": {
+    "exactGoalRequired": false,
+    "bounceOnOverflow": true,
+    "defaultCorrectAdvance": 2,
+    "defaultWrongBack": 2,
+    "resolveOrder": "question-then-effect"
+  },
+  "texts": {
+    "startLog": "🚀 Comença la missió espacial!",
+    "questionTitle": "Pregunta astronòmica",
+    "correct": "✅ Molt bé! Continueu explorant.",
+    "wrong": "❌ Aquesta vegada no, però encara hi sou a temps.",
+    "victoryTitle": "🏆 MISSIÓ COMPLETADA!",
+    "victoryText": "Heu arribat a un exoplaneta habitable.",
+    "rollButton": "Tira el dau espacial",
+    "playAgain": "🌠 Tornar a l'inici"
+  },
+  "questionPolicy": {
+    "mode": "all-except",
+    "defaultPool": "general",
+    "includeTypes": ["normal", "effect", "question"],
+    "excludeTypes": ["start", "goal"],
+    "excludeIndexes": [],
+    "everyNthCell": null,
+    "probability": 1,
+    "overrides": {
+      "7": { "ask": true, "pool": "kepler" },
+      "11": { "ask": true, "pool": "tess" },
+      "26": { "ask": true, "pool": "vida" }
     }
-  ]
+  },
+  "board": {
+    "rows": 8,
+    "cols": 8,
+    "path": "standard-8x8-ring",
+    "cells": [
+      { "icon": "🚀", "label": "Sortida (Terra)", "type": "start", "message": "🌍 La missió comença des de la Terra." },
+      { "icon": "🌍", "label": "Espai profund", "type": "normal" },
+      { "icon": "✨", "label": "Nebulosa", "type": "normal" },
+      { "icon": "❓", "label": "Estació de recerca", "type": "question" },
+      { "icon": "🌌", "label": "Via Làctia", "type": "normal" },
+      { "icon": "💫", "label": "Supernova impulsora", "type": "effect", "effect": { "kind": "move", "steps": 3, "direction": "forward" }, "message": "💫 Una supernova us impulsa endavant!" },
+      { "icon": "🔭", "label": "Observatori", "type": "normal" },
+      { "icon": "❓", "label": "Base Kepler", "type": "question", "question": { "pool": "kepler" } },
+      { "icon": "⭐", "label": "Estrella binària", "type": "normal" },
+      { "icon": "🕳️", "label": "Forat negre", "type": "effect", "effect": { "kind": "move", "steps": 3, "direction": "backward" }, "message": "🕳️ La gravetat us atrapa i retrocediu." },
+      { "icon": "🪐", "label": "Gegant gasós", "type": "normal" },
+      { "icon": "❓", "label": "Laboratori TESS", "type": "question", "question": { "pool": "tess" } },
+      { "icon": "☄️", "label": "Cinturó d'asteroides", "type": "normal" },
+      { "icon": "💫", "label": "Vent estel·lar", "type": "effect", "effect": { "kind": "move", "steps": 2, "direction": "forward" } },
+      { "icon": "🌠", "label": "Estel fugaç", "type": "normal" },
+      { "icon": "❓", "label": "Mòdul científic", "type": "question" },
+      { "icon": "🛰️", "label": "Satèl·lit", "type": "normal" },
+      { "icon": "🕳️", "label": "Forat de cuc inestable", "type": "effect", "effect": { "kind": "move", "steps": 2, "direction": "backward" } },
+      { "icon": "🌑", "label": "Planeta rocós", "type": "normal" },
+      { "icon": "❓", "label": "Centre de dades", "type": "question" },
+      { "icon": "💧", "label": "Zona habitable", "type": "normal" },
+      { "icon": "💫", "label": "Raig còsmic", "type": "effect", "effect": { "kind": "move", "steps": 2, "direction": "forward" } },
+      { "icon": "🧊", "label": "Planeta gelat", "type": "normal" },
+      { "icon": "❓", "label": "Arxiu astronòmic", "type": "question", "question": { "pool": "kepler" } },
+      { "icon": "🔥", "label": "Júpiter calent", "type": "normal" },
+      { "icon": "🕳️", "label": "Gravetat extrema", "type": "effect", "effect": { "kind": "move", "steps": 2, "direction": "backward" } },
+      { "icon": "🧬", "label": "Biomarcadors", "type": "question", "question": { "pool": "vida" } },
+      { "icon": "🏆", "label": "Exoplaneta habitable", "type": "goal" }
+    ]
+  },
+  "questionPools": {
+    "general": [
+      {
+        "id": "exo-g1",
+        "question": "Què és un exoplaneta?",
+        "options": [
+          "Un planeta del sistema solar",
+          "Un planeta que orbita una altra estrella",
+          "Una estrella petita",
+          "Un satèl·lit artificial"
+        ],
+        "correct": 1,
+        "hint": "No és del nostre sistema solar.",
+        "explanation": "Un exoplaneta és un planeta que orbita una estrella diferent del Sol.",
+        "image": "",
+        "bonusIfCorrect": 0,
+        "penaltyIfWrong": 0
+      },
+      {
+        "id": "exo-g2",
+        "question": "Què és la zona habitable?",
+        "options": [
+          "La zona més freda de l'estrella",
+          "La regió on podria existir aigua líquida",
+          "La part interior del planeta",
+          "La corona solar"
+        ],
+        "correct": 1,
+        "hint": "Pensa en l'aigua líquida.",
+        "explanation": "És la distància on la temperatura podria permetre aigua líquida.",
+        "image": "",
+        "bonusIfCorrect": 0,
+        "penaltyIfWrong": 0
+      },
+      {
+        "id": "exo-g3",
+        "question": "Per què costa veure exoplanetes directament?",
+        "options": [
+          "Són massa llunyans i la llum de l'estrella els enlluerna",
+          "No existeixen",
+          "Tenen llum pròpia molt intensa",
+          "Només es veuen de dia"
+        ],
+        "correct": 0,
+        "hint": "La dificultat és la llum de l'estrella.",
+        "explanation": "La llum de l'estrella és molt més intensa que la del planeta.",
+        "image": "",
+        "bonusIfCorrect": 0,
+        "penaltyIfWrong": 0
+      }
+    ],
+    "kepler": [
+      {
+        "id": "exo-k1",
+        "question": "Quin telescopi ha descobert molts exoplanetes?",
+        "options": ["Kepler", "Apollo", "Sputnik", "Voyager"],
+        "correct": 0,
+        "hint": "És una missió dedicada als exoplanetes.",
+        "explanation": "Kepler va ser una missió clau en la detecció d'exoplanetes.",
+        "image": "",
+        "bonusIfCorrect": 0,
+        "penaltyIfWrong": 0
+      },
+      {
+        "id": "exo-k2",
+        "question": "Quin mètode detecta un planeta quan passa davant de la seva estrella?",
+        "options": [
+          "Mètode de trànsit",
+          "Mètode sísmic",
+          "Mètode sonar",
+          "Mètode químic"
+        ],
+        "correct": 0,
+        "hint": "Baixa lleugerament la llum de l'estrella.",
+        "explanation": "Quan el planeta passa pel davant, la llum de l'estrella baixa lleugerament.",
+        "image": "",
+        "bonusIfCorrect": 0,
+        "penaltyIfWrong": 0
+      }
+    ],
+    "tess": [
+      {
+        "id": "exo-t1",
+        "question": "TESS és una missió dedicada a...",
+        "options": [
+          "Buscar exoplanetes",
+          "Anar a la Lluna",
+          "Estudiar volcans",
+          "Mesurar terratrèmols"
+        ],
+        "correct": 0,
+        "hint": "També treballa amb trànsits.",
+        "explanation": "TESS estudia el cel per trobar planetes mitjançant trànsits.",
+        "image": "",
+        "bonusIfCorrect": 0,
+        "penaltyIfWrong": 0
+      }
+    ],
+    "vida": [
+      {
+        "id": "exo-v1",
+        "question": "Quina característica és clau per a la vida tal com la coneixem?",
+        "options": ["Anells", "Aigua líquida", "Moltes llunes", "Color blau"],
+        "correct": 1,
+        "hint": "És essencial per a la vida terrestre.",
+        "explanation": "L'aigua líquida és una condició molt important per a la vida.",
+        "image": "",
+        "bonusIfCorrect": 0,
+        "penaltyIfWrong": 0
+      },
+      {
+        "id": "exo-v2",
+        "question": "Què són els biomarcadors?",
+        "options": [
+          "Senyals que podrien indicar vida",
+          "Tipus de satèl·lits",
+          "Partícules d'un estel",
+          "Rajos còsmics"
+        ],
+        "correct": 0,
+        "hint": "Són pistes de possible activitat biològica.",
+        "explanation": "Els biomarcadors són indicis químics o físics que podrien suggerir vida.",
+        "image": "",
+        "bonusIfCorrect": 0,
+        "penaltyIfWrong": 0
+      }
+    ]
+  }
 }
-
-
-
-
-
-
-
