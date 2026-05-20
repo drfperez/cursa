@@ -1,22 +1,22 @@
-{
+    {
   "version": 2,
   "meta": {
-    "id": "exoplanetes",
-    "title": "EXOCURSA",
-    "subtitle": "Viatja per la galàxia descobrint exoplanetes.",
-    "emoji": "🪐",
-    "description": "Preguntes i recorregut sobre astronomia i exoplanetes.",
-    "victoryTitle": "Has arribat a l'exoplaneta habitable!"
+    "id": "celules",
+    "title": "CEL·LUCURSA",
+    "subtitle": "Explora l'interior de la cèl·lula.",
+    "emoji": "🔬",
+    "description": "Repàs sobre estructura i funció de les cèl·lules.",
+    "victoryTitle": "Has completat el recorregut de la cèl·lula!"
   },
   "ui": {
     "palette": {
-      "primary": "#283593",
-      "secondary": "#ffca28",
-      "accent": "#26a69a",
-      "background": "#090b1a",
-      "panel": "#151937"
+      "primary": "#00897b",
+      "secondary": "#ffd54f",
+      "accent": "#5e35b1",
+      "background": "#081b18",
+      "panel": "#10312d"
     },
-    "innerDecorations": ["🌟", "🌌", "✨", "🛰️", "☄️", "🔭"],
+    "innerDecorations": ["🧫", "🔬", "🧬", "⚛️", "🧪", "🌿"],
     "showCellNumbers": true,
     "fontFamily": "Segoe UI, Arial, sans-serif"
   },
@@ -24,10 +24,10 @@
     "min": 2,
     "max": 4,
     "presets": [
-      { "name": "Equip Solar", "color": "#e53935", "token": "🚀" },
-      { "name": "Equip Kepler", "color": "#1e88e5", "token": "🔭" },
-      { "name": "Equip TESS", "color": "#43a047", "token": "🛰️" },
-      { "name": "Equip Galàxia", "color": "#fb8c00", "token": "🌌" }
+      { "name": "Equip Nucli", "color": "#e53935", "token": "🧠" },
+      { "name": "Equip Membrana", "color": "#1e88e5", "token": "🫧" },
+      { "name": "Equip Mitocondri", "color": "#43a047", "token": "⚡" },
+      { "name": "Equip Ribosoma", "color": "#fb8c00", "token": "🧬" }
     ]
   },
   "rules": {
@@ -38,14 +38,14 @@
     "resolveOrder": "question-then-effect"
   },
   "texts": {
-    "startLog": "🚀 Comença la missió espacial!",
-    "questionTitle": "Pregunta astronòmica",
-    "correct": "✅ Molt bé! Continueu explorant.",
-    "wrong": "❌ Aquesta vegada no, però encara hi sou a temps.",
-    "victoryTitle": "🏆 MISSIÓ COMPLETADA!",
-    "victoryText": "Heu arribat a un exoplaneta habitable.",
-    "rollButton": "Tira el dau espacial",
-    "playAgain": "🌠 Tornar a l'inici"
+    "startLog": "🔬 Comença el viatge dins la cèl·lula!",
+    "questionTitle": "Pregunta cel·lular",
+    "correct": "✅ Bona resposta!",
+    "wrong": "❌ Reviseu el concepte i continueu.",
+    "victoryTitle": "🏆 CÈL·LULA COMPLETADA!",
+    "victoryText": "Heu recorregut totes les parts de la cèl·lula.",
+    "rollButton": "Tira el dau cel·lular",
+    "playAgain": "🧫 Tornar a l'inici"
   },
   "questionPolicy": {
     "mode": "all-except",
@@ -56,9 +56,13 @@
     "everyNthCell": null,
     "probability": 1,
     "overrides": {
-      "7": { "ask": true, "pool": "kepler" },
-      "11": { "ask": true, "pool": "tess" },
-      "26": { "ask": true, "pool": "vida" }
+      "3": { "ask": true, "pool": "nucli" },
+      "7": { "ask": true, "pool": "nucli" },
+      "11": { "ask": true, "pool": "organuls" },
+      "15": { "ask": true, "pool": "vegetal" },
+      "19": { "ask": true, "pool": "general" },
+      "23": { "ask": true, "pool": "vegetal" },
+      "26": { "ask": true, "pool": "genetica" }
     }
   },
   "board": {
@@ -66,162 +70,366 @@
     "cols": 8,
     "path": "standard-8x8-ring",
     "cells": [
-      { "icon": "🚀", "label": "Sortida (Terra)", "type": "start", "message": "🌍 La missió comença des de la Terra." },
-      { "icon": "🌍", "label": "Espai profund", "type": "normal" },
-      { "icon": "✨", "label": "Nebulosa", "type": "normal" },
-      { "icon": "❓", "label": "Estació de recerca", "type": "question" },
-      { "icon": "🌌", "label": "Via Làctia", "type": "normal" },
-      { "icon": "💫", "label": "Supernova impulsora", "type": "effect", "effect": { "kind": "move", "steps": 3, "direction": "forward" }, "message": "💫 Una supernova us impulsa endavant!" },
-      { "icon": "🔭", "label": "Observatori", "type": "normal" },
-      { "icon": "❓", "label": "Base Kepler", "type": "question", "question": { "pool": "kepler" } },
-      { "icon": "⭐", "label": "Estrella binària", "type": "normal" },
-      { "icon": "🕳️", "label": "Forat negre", "type": "effect", "effect": { "kind": "move", "steps": 3, "direction": "backward" }, "message": "🕳️ La gravetat us atrapa i retrocediu." },
-      { "icon": "🪐", "label": "Gegant gasós", "type": "normal" },
-      { "icon": "❓", "label": "Laboratori TESS", "type": "question", "question": { "pool": "tess" } },
-      { "icon": "☄️", "label": "Cinturó d'asteroides", "type": "normal" },
-      { "icon": "💫", "label": "Vent estel·lar", "type": "effect", "effect": { "kind": "move", "steps": 2, "direction": "forward" } },
-      { "icon": "🌠", "label": "Estel fugaç", "type": "normal" },
-      { "icon": "❓", "label": "Mòdul científic", "type": "question" },
-      { "icon": "🛰️", "label": "Satèl·lit", "type": "normal" },
-      { "icon": "🕳️", "label": "Forat de cuc inestable", "type": "effect", "effect": { "kind": "move", "steps": 2, "direction": "backward" } },
-      { "icon": "🌑", "label": "Planeta rocós", "type": "normal" },
-      { "icon": "❓", "label": "Centre de dades", "type": "question" },
-      { "icon": "💧", "label": "Zona habitable", "type": "normal" },
-      { "icon": "💫", "label": "Raig còsmic", "type": "effect", "effect": { "kind": "move", "steps": 2, "direction": "forward" } },
-      { "icon": "🧊", "label": "Planeta gelat", "type": "normal" },
-      { "icon": "❓", "label": "Arxiu astronòmic", "type": "question", "question": { "pool": "kepler" } },
-      { "icon": "🔥", "label": "Júpiter calent", "type": "normal" },
-      { "icon": "🕳️", "label": "Gravetat extrema", "type": "effect", "effect": { "kind": "move", "steps": 2, "direction": "backward" } },
-      { "icon": "🧬", "label": "Biomarcadors", "type": "question", "question": { "pool": "vida" } },
-      { "icon": "🏆", "label": "Exoplaneta habitable", "type": "goal" }
+      {
+        "icon": "🚪",
+        "label": "Entrada a la cèl·lula",
+        "type": "start",
+        "message": "Comença l'exploració microscòpica."
+      },
+      {
+        "icon": "🫧",
+        "label": "Membrana plasmàtica",
+        "type": "normal"
+      },
+      {
+        "icon": "💧",
+        "label": "Citoplasma",
+        "type": "normal"
+      },
+      {
+        "icon": "❓",
+        "label": "Control cel·lular",
+        "type": "question",
+        "question": { "pool": "nucli" }
+      },
+      {
+        "icon": "🧬",
+        "label": "ADN",
+        "type": "normal"
+      },
+      {
+        "icon": "⚡",
+        "label": "Energia extra",
+        "type": "effect",
+        "effect": {
+          "kind": "move",
+          "steps": 2,
+          "direction": "forward"
+        },
+        "message": "⚡ Els mitocondris us impulsen endavant!"
+      },
+      {
+        "icon": "🏭",
+        "label": "Ribosomes",
+        "type": "normal"
+      },
+      {
+        "icon": "❓",
+        "label": "Sala del nucli",
+        "type": "question",
+        "question": { "pool": "nucli" }
+      },
+      {
+        "icon": "📦",
+        "label": "Aparell de Golgi",
+        "type": "normal"
+      },
+      {
+        "icon": "🧹",
+        "label": "Lisosoma rebel",
+        "type": "effect",
+        "effect": {
+          "kind": "move",
+          "steps": 2,
+          "direction": "backward"
+        },
+        "message": "🧹 Els lisosomes desordenen el recorregut."
+      },
+      {
+        "icon": "🧪",
+        "label": "Reticle endoplasmàtic",
+        "type": "normal"
+      },
+      {
+        "icon": "❓",
+        "label": "Fàbrica de proteïnes",
+        "type": "question",
+        "question": { "pool": "organuls" }
+      },
+      {
+        "icon": "🔋",
+        "label": "Mitocondri",
+        "type": "normal"
+      },
+      {
+        "icon": "⚡",
+        "label": "Respiració cel·lular",
+        "type": "effect",
+        "effect": {
+          "kind": "move",
+          "steps": 2,
+          "direction": "forward"
+        }
+      },
+      {
+        "icon": "🌿",
+        "label": "Cloroplast",
+        "type": "normal"
+      },
+      {
+        "icon": "❓",
+        "label": "Centre verd",
+        "type": "question",
+        "question": { "pool": "vegetal" }
+      },
+      {
+        "icon": "💦",
+        "label": "Vacúol",
+        "type": "normal"
+      },
+      {
+        "icon": "🧹",
+        "label": "Residus acumulats",
+        "type": "effect",
+        "effect": {
+          "kind": "move",
+          "steps": 2,
+          "direction": "backward"
+        }
+      },
+      {
+        "icon": "🔬",
+        "label": "Microscopi",
+        "type": "normal"
+      },
+      {
+        "icon": "❓",
+        "label": "Laboratori",
+        "type": "question",
+        "question": { "pool": "general" }
+      },
+      {
+        "icon": "🪢",
+        "label": "Citoesquelet",
+        "type": "normal"
+      },
+      {
+        "icon": "⚡",
+        "label": "Bon transport intern",
+        "type": "effect",
+        "effect": {
+          "kind": "move",
+          "steps": 2,
+          "direction": "forward"
+        }
+      },
+      {
+        "icon": "🧱",
+        "label": "Paret cel·lular",
+        "type": "normal"
+      },
+      {
+        "icon": "❓",
+        "label": "Mur protector",
+        "type": "question",
+        "question": { "pool": "vegetal" }
+      },
+      {
+        "icon": "🧠",
+        "label": "Nucli",
+        "type": "normal"
+      },
+      {
+        "icon": "🧹",
+        "label": "Error de còpia",
+        "type": "effect",
+        "effect": {
+          "kind": "move",
+          "steps": 2,
+          "direction": "backward"
+        }
+      },
+      {
+        "icon": "🧬",
+        "label": "Informació genètica",
+        "type": "question",
+        "question": { "pool": "genetica" }
+      },
+      {
+        "icon": "🏆",
+        "label": "Cèl·lula funcional",
+        "type": "goal"
+      }
     ]
   },
   "questionPools": {
     "general": [
       {
-        "id": "exo-g1",
-        "question": "Què és un exoplaneta?",
-        "options": [
-          "Un planeta del sistema solar",
-          "Un planeta que orbita una altra estrella",
-          "Una estrella petita",
-          "Un satèl·lit artificial"
-        ],
-        "correct": 1,
-        "hint": "No és del nostre sistema solar.",
-        "explanation": "Un exoplaneta és un planeta que orbita una estrella diferent del Sol.",
+        "id": "cel-g1",
+        "question": "Quina és la unitat bàsica de la vida?",
+        "options": ["Teixit", "Òrgan", "Cèl·lula", "Sistema"],
+        "correct": 2,
+        "hint": "És l'estructura mínima viva.",
+        "explanation": "La cèl·lula és la unitat estructural i funcional dels éssers vius.",
         "image": "",
         "bonusIfCorrect": 0,
         "penaltyIfWrong": 0
       },
       {
-        "id": "exo-g2",
-        "question": "Què és la zona habitable?",
+        "id": "cel-g2",
+        "question": "Quina funció té la membrana plasmàtica?",
         "options": [
-          "La zona més freda de l'estrella",
-          "La regió on podria existir aigua líquida",
-          "La part interior del planeta",
-          "La corona solar"
+          "Fabricar proteïnes",
+          "Controlar l'entrada i sortida de substàncies",
+          "Produir energia",
+          "Guardar ADN"
         ],
         "correct": 1,
-        "hint": "Pensa en l'aigua líquida.",
-        "explanation": "És la distància on la temperatura podria permetre aigua líquida.",
+        "hint": "Fa de frontera selectiva.",
+        "explanation": "La membrana regula l'intercanvi de substàncies amb el medi.",
         "image": "",
         "bonusIfCorrect": 0,
         "penaltyIfWrong": 0
       },
       {
-        "id": "exo-g3",
-        "question": "Per què costa veure exoplanetes directament?",
-        "options": [
-          "Són massa llunyans i la llum de l'estrella els enlluerna",
-          "No existeixen",
-          "Tenen llum pròpia molt intensa",
-          "Només es veuen de dia"
-        ],
+        "id": "cel-g3",
+        "question": "On tenen lloc moltes reaccions químiques de la cèl·lula?",
+        "options": ["Al citoplasma", "A la paret cel·lular", "Als cilis", "A l'exterior"],
         "correct": 0,
-        "hint": "La dificultat és la llum de l'estrella.",
-        "explanation": "La llum de l'estrella és molt més intensa que la del planeta.",
+        "hint": "És el medi intern on es troben els orgànuls.",
+        "explanation": "El citoplasma és el medi intern on tenen lloc moltes reaccions cel·lulars.",
         "image": "",
         "bonusIfCorrect": 0,
         "penaltyIfWrong": 0
       }
     ],
-    "kepler": [
+    "nucli": [
       {
-        "id": "exo-k1",
-        "question": "Quin telescopi ha descobert molts exoplanetes?",
-        "options": ["Kepler", "Apollo", "Sputnik", "Voyager"],
-        "correct": 0,
-        "hint": "És una missió dedicada als exoplanetes.",
-        "explanation": "Kepler va ser una missió clau en la detecció d'exoplanetes.",
-        "image": "",
-        "bonusIfCorrect": 0,
-        "penaltyIfWrong": 0
-      },
-      {
-        "id": "exo-k2",
-        "question": "Quin mètode detecta un planeta quan passa davant de la seva estrella?",
-        "options": [
-          "Mètode de trànsit",
-          "Mètode sísmic",
-          "Mètode sonar",
-          "Mètode químic"
-        ],
-        "correct": 0,
-        "hint": "Baixa lleugerament la llum de l'estrella.",
-        "explanation": "Quan el planeta passa pel davant, la llum de l'estrella baixa lleugerament.",
-        "image": "",
-        "bonusIfCorrect": 0,
-        "penaltyIfWrong": 0
-      }
-    ],
-    "tess": [
-      {
-        "id": "exo-t1",
-        "question": "TESS és una missió dedicada a...",
-        "options": [
-          "Buscar exoplanetes",
-          "Anar a la Lluna",
-          "Estudiar volcans",
-          "Mesurar terratrèmols"
-        ],
-        "correct": 0,
-        "hint": "També treballa amb trànsits.",
-        "explanation": "TESS estudia el cel per trobar planetes mitjançant trànsits.",
-        "image": "",
-        "bonusIfCorrect": 0,
-        "penaltyIfWrong": 0
-      }
-    ],
-    "vida": [
-      {
-        "id": "exo-v1",
-        "question": "Quina característica és clau per a la vida tal com la coneixem?",
-        "options": ["Anells", "Aigua líquida", "Moltes llunes", "Color blau"],
+        "id": "cel-n1",
+        "question": "Quina estructura controla l'activitat de la cèl·lula?",
+        "options": ["Ribosoma", "Nucli", "Citoplasma", "Membrana"],
         "correct": 1,
-        "hint": "És essencial per a la vida terrestre.",
-        "explanation": "L'aigua líquida és una condició molt important per a la vida.",
+        "hint": "Conté el material genètic.",
+        "explanation": "El nucli conté l'ADN i dirigeix moltes funcions de la cèl·lula.",
         "image": "",
         "bonusIfCorrect": 0,
         "penaltyIfWrong": 0
       },
       {
-        "id": "exo-v2",
-        "question": "Què són els biomarcadors?",
+        "id": "cel-n2",
+        "question": "On es troba principalment l'ADN a la cèl·lula eucariota?",
+        "options": ["Als ribosomes", "Al nucli", "Al vacúol", "A la membrana"],
+        "correct": 1,
+        "hint": "És el centre de control.",
+        "explanation": "En les cèl·lules eucariotes, l'ADN es troba principalment al nucli.",
+        "image": "",
+        "bonusIfCorrect": 0,
+        "penaltyIfWrong": 0
+      }
+    ],
+    "organuls": [
+      {
+        "id": "cel-o1",
+        "question": "Quina estructura fabrica proteïnes?",
+        "options": ["Ribosomes", "Mitocondris", "Vacúols", "Lisosomes"],
+        "correct": 0,
+        "hint": "Són petites estructures molt importants.",
+        "explanation": "Els ribosomes s'encarreguen de la síntesi de proteïnes.",
+        "image": "",
+        "bonusIfCorrect": 0,
+        "penaltyIfWrong": 0
+      },
+      {
+        "id": "cel-o2",
+        "question": "Quin orgànul produeix energia per a la cèl·lula?",
+        "options": ["Nucli", "Mitocondri", "Golgi", "Membrana"],
+        "correct": 1,
+        "hint": "Fa la respiració cel·lular.",
+        "explanation": "Els mitocondris produeixen energia utilitzable per la cèl·lula.",
+        "image": "",
+        "bonusIfCorrect": 0,
+        "penaltyIfWrong": 0
+      },
+      {
+        "id": "cel-o3",
+        "question": "Per a què serveix l'aparell de Golgi?",
         "options": [
-          "Senyals que podrien indicar vida",
-          "Tipus de satèl·lits",
-          "Partícules d'un estel",
-          "Rajos còsmics"
+          "Modificar i empaquetar substàncies",
+          "Fer fotosíntesi",
+          "Guardar ADN",
+          "Fer digestió"
         ],
         "correct": 0,
-        "hint": "Són pistes de possible activitat biològica.",
-        "explanation": "Els biomarcadors són indicis químics o físics que podrien suggerir vida.",
+        "hint": "Actua com una central d'empaquetatge.",
+        "explanation": "L'aparell de Golgi modifica, classifica i empaqueta proteïnes i altres substàncies.",
+        "image": "",
+        "bonusIfCorrect": 0,
+        "penaltyIfWrong": 0
+      }
+    ],
+    "vegetal": [
+      {
+        "id": "cel-v1",
+        "question": "Quina estructura és pròpia de les cèl·lules vegetals?",
+        "options": ["Cloroplast", "Centrosoma", "Cili", "Flagel"],
+        "correct": 0,
+        "hint": "Hi té lloc la fotosíntesi.",
+        "explanation": "Els cloroplasts són característics de les cèl·lules vegetals.",
+        "image": "",
+        "bonusIfCorrect": 0,
+        "penaltyIfWrong": 0
+      },
+      {
+        "id": "cel-v2",
+        "question": "Per a què serveix el cloroplast?",
+        "options": [
+          "Fer la fotosíntesi",
+          "Fer la digestió",
+          "Produir proteïnes",
+          "Regular l'ADN"
+        ],
+        "correct": 0,
+        "hint": "Utilitza la llum solar.",
+        "explanation": "Els cloroplasts capten energia lluminosa per fer la fotosíntesi.",
+        "image": "",
+        "bonusIfCorrect": 0,
+        "penaltyIfWrong": 0
+      },
+      {
+        "id": "cel-v3",
+        "question": "Quina funció té la paret cel·lular?",
+        "options": [
+          "Donar suport i protecció",
+          "Produir energia",
+          "Fer la síntesi de proteïnes",
+          "Transportar ADN"
+        ],
+        "correct": 0,
+        "hint": "És una estructura rígida externa.",
+        "explanation": "La paret cel·lular dona forma, suport i protecció a la cèl·lula vegetal.",
+        "image": "",
+        "bonusIfCorrect": 0,
+        "penaltyIfWrong": 0
+      }
+    ],
+    "genetica": [
+      {
+        "id": "cel-ge1",
+        "question": "Què conté la informació genètica de la cèl·lula?",
+        "options": ["ATP", "ADN", "Aigua", "Lípids"],
+        "correct": 1,
+        "hint": "És la molècula hereditària.",
+        "explanation": "L'ADN conté la informació genètica necessària per al funcionament i la reproducció.",
+        "image": "",
+        "bonusIfCorrect": 0,
+        "penaltyIfWrong": 0
+      },
+      {
+        "id": "cel-ge2",
+        "question": "Quina és una funció de l'ADN?",
+        "options": [
+          "Emmagatzemar instruccions genètiques",
+          "Fer la digestió",
+          "Produir llum",
+          "Crear membrana"
+        ],
+        "correct": 0,
+        "hint": "Guarda informació important.",
+        "explanation": "L'ADN emmagatzema les instruccions que dirigeixen l'activitat cel·lular.",
         "image": "",
         "bonusIfCorrect": 0,
         "penaltyIfWrong": 0
       }
     ]
   }
-}
+      }
