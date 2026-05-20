@@ -1,0 +1,146 @@
+
+
+{
+  "id": "ecosistemes",
+  "title": "ECOCURSA",
+  "subtitle": "Descobreix com funcionen els ecosistemes.",
+  "emoji": "🌿",
+  "shortDescription": "Tema sobre ecosistemes, biodiversitat i relacions tròfiques.",
+  "victoryTitle": "Has assolit l'equilibri ecològic!",
+  "innerDecorations": ["🌳", "🦊", "🌊", "☀️", "🍃", "🦉", "🐝", "🍄"],
+  "rules": {
+    "correctAdvance": 2,
+    "wrongBack": 2,
+    "specialAdvance": 3,
+    "specialBack": 3,
+    "exactGoalRequired": false
+  },
+  "items": [
+    ["🌱", "Inici del bosc"],
+    ["🌿", "Plantes productores"],
+    ["☀️", "Energia solar"],
+    ["❓", "Cadena alimentària"],
+    ["💧", "Cicle de l'aigua"],
+    ["🌬️", "Vent favorable"],
+    ["🦊", "Consumidor"],
+    ["❓", "Relacions ecològiques"],
+    ["🌳", "Bosc madur"],
+    ["🔥", "Incendi forestal"],
+    ["🪱", "Descomponedors"],
+    ["❓", "Nivells tròfics"],
+    ["🦋", "Pol·linització"],
+    ["🌈", "Pluja nutritiva"],
+    ["🐟", "Ecosistema aquàtic"],
+    ["❓", "Biodiversitat"],
+    ["🪨", "Sòl"],
+    ["🗑️", "Contaminació"],
+    ["🦉", "Fauna nocturna"],
+    ["❓", "Adaptacions"],
+    ["🌊", "Riu"],
+    ["🌬️", "Recuperació natural"],
+    ["🐝", "Pol·linitzadors"],
+    ["❓", "Espècies invasores"],
+    ["🍄", "Fongs"],
+    ["🗑️", "Residus tòxics"],
+    ["🌎", "Equilibri natural"],
+    ["🏆", "Equilibri ecològic"]
+  ],
+  "questions": [
+    {
+      "question": "Què és un productor en un ecosistema?",
+      "options": [
+        "Un ésser viu que fabrica el seu aliment",
+        "Un animal depredador",
+        "Un fong descomponedor",
+        "Un objecte sense vida"
+      ],
+      "correct": 0
+    },
+    {
+      "question": "Què és la biodiversitat?",
+      "options": [
+        "La varietat d'éssers vius d'un lloc",
+        "Només el nombre d'arbres",
+        "La temperatura del sòl",
+        "La quantitat de roques"
+      ],
+      "correct": 0
+    },
+    {
+      "question": "Els descomponedors...",
+      "options": [
+        "Transformen restes orgàniques en nutrients",
+        "Fan fotosíntesi",
+        "Són sempre depredadors",
+        "No formen part dels ecosistemes"
+      ],
+      "correct": 0
+    },
+    {
+      "question": "Quina és la font principal d'energia de molts ecosistemes?",
+      "options": ["La Lluna", "El Sol", "El vent", "Les roques"],
+      "correct": 1
+    },
+    {
+      "question": "Una cadena alimentària mostra...",
+      "options": [
+        "Qui es menja qui",
+        "Només animals herbívors",
+        "Només plantes",
+        "La pluja anual"
+      ],
+      "correct": 0
+    },
+    {
+      "question": "Què pot reduir la biodiversitat?",
+      "options": ["Protegir hàbitats", "La contaminació", "La reforestació", "L'educació ambiental"],
+      "correct": 1
+    },
+    {
+      "question": "Una espècie invasora és...",
+      "options": [
+        "Una espècie introduïda que altera l'ecosistema",
+        "Una espècie microscòpica",
+        "Una espècie extingida",
+        "Una planta medicinal"
+      ],
+      "correct": 0
+    },
+    {
+      "question": "Els herbívors són...",
+      "options": [
+        "Consumidors que mengen plantes",
+        "Productors",
+        "Descomponedors",
+        "Bacteris"
+      ],
+      "correct": 0
+    },
+    {
+      "question": "El sòl és important perquè...",
+      "options": [
+        "Aporta suport i nutrients a moltes plantes",
+        "Només serveix per caminar",
+        "No té vida",
+        "Substitueix el Sol"
+      ],
+      "correct": 0
+    },
+    {
+      "question": "Quan un ecosistema està en equilibri...",
+      "options": [
+        "Les relacions entre éssers vius i medi funcionen de manera estable",
+        "No hi ha cap animal",
+        "Sempre plou",
+        "No hi ha canvis mai"
+      ],
+      "correct": 0
+    }
+  ]
+}
+
+
+
+
+
+
