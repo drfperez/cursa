@@ -1,0 +1,28 @@
+{
+  "themes": [
+    {
+      "id": "exoplanetes",
+      "label": "🪐 Exoplanetes",
+      "file": "./data/themes/exoplanetes.json"
+    },
+    {
+      "id": "celules",
+      "label": "🔬 Cèl·lules",
+      "file": "./data/themes/celules.json"
+    },
+    {
+      "id": "ecosistemes",
+      "label": "🌿 Ecosistemes",
+      "file": "./data/themes/ecosistemes.json"
+    }
+  ]
+}
+
+
+
+
+
+
+
+
+
