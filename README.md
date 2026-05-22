@@ -1,6 +1,6 @@
 ## El joc de la cursa de ciències 
 
-Joc tipus l'Oca per ser modificat per alumnes i aprendre Ciències. Llegeix el README tecnic.md per més informació.
+Joc tipus l'Oca per ser modificat per alumnes i aprendre Ciències. Llegeix el README tecnic.md per més informació. S'inclou un editor json que permet crear jocs de diferents temes.
 
 
 ### Prova el joc inicial
