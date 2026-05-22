@@ -79,6 +79,7 @@ Quan es carrega l'aplicació:
 3. En seleccionar un tema, `app.js` carrega el JSON corresponent.
 4. El tema es normalitza i es transforma en una estructura interna consistent.
 5. Quan l'usuari prem un botó de nombre de jugadors, el motor s'inicialitza.
+6. NOVETAT: Pots crear json de jocs fàcilment amb arxiu inclòs editorjson.html
 
 ### 3.2 Execució del joc
 
