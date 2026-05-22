@@ -12,3 +12,5 @@ Pots provar la versió inicial del joc en aquest enllaç:
 ![imatge joc 1](cursa1.jpg)
 ![imatge joc 2](cursa2.jpg)
 ![imatge joc 3](cursa3.jpg)
+![editor json joc](editorjson.jpg)
+
