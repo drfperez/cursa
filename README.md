@@ -7,7 +7,7 @@ Joc tipus l'Oca per ser modificat per alumnes i aprendre Ciències. Llegeix el R
 
 Pots provar la versió inicial del joc en aquest enllaç:
 
-👉 https://pompeu.neocities.org/1ESO/jocs
+👉 https://drfperez.github.io/cursa
 
 ![imatge joc 1](cursa1.jpg)
 ![imatge joc 2](cursa2.jpg)
