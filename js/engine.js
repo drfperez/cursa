@@ -1,3 +1,4 @@
+
 (function () {
     class GameEngine {
         constructor(renderer) {
@@ -242,7 +243,6 @@
 
     window.GameEngine = GameEngine;
 })();
-
 
 
 
