@@ -1,0 +1,131 @@
+
+{
+  "id": "celules",
+  "title": "CEL·LUCURSA",
+  "subtitle": "Explora la cèl·lula i els seus orgànuls.",
+  "emoji": "🔬",
+  "shortDescription": "Tema sobre cèl·lules, orgànuls i funcions vitals.",
+  "victoryTitle": "Has arribat al nucli cel·lular!",
+  "innerDecorations": ["🧬", "🔬", "🧫", "⚗️", "🧪", "🦠", "🌿", "💧"],
+  "rules": {
+    "correctAdvance": 2,
+    "wrongBack": 2,
+    "specialAdvance": 3,
+    "specialBack": 3,
+    "exactGoalRequired": false
+  },
+  "items": [
+    ["🧫", "Entrada al laboratori"],
+    ["💧", "Citoplasma"],
+    ["🧬", "Informació genètica"],
+    ["❓", "Membrana cel·lular"],
+    ["🔬", "Observació microscòpica"],
+    ["⚡", "Impuls energètic"],
+    ["🧪", "Reactiu biològic"],
+    ["❓", "Orgànuls"],
+    ["🟣", "Nucli"],
+    ["🧱", "Error de transport"],
+    ["🟢", "Mitocondri"],
+    ["❓", "Ribosomes"],
+    ["📦", "Aparell de Golgi"],
+    ["⚡", "ATP extra"],
+    ["🧵", "Reticle endoplasmàtic"],
+    ["❓", "Vacúol"],
+    ["🌿", "Cloroplast"],
+    ["🧱", "Pèrdua de nutrients"],
+    ["🦠", "Món microscòpic"],
+    ["❓", "Paret cel·lular"],
+    ["💨", "Difusió"],
+    ["⚡", "Transport actiu"],
+    ["🫧", "Vesícula"],
+    ["❓", "ADN"],
+    ["🧫", "Cultiu cel·lular"],
+    ["🧱", "Dany a la membrana"],
+    ["🧬", "Divisió cel·lular"],
+    ["🏆", "Nucli cel·lular"]
+  ],
+  "questions": [
+    {
+      "question": "Quina funció té el nucli?",
+      "options": [
+        "Fer la fotosíntesi",
+        "Controlar l'activitat cel·lular",
+        "Produir sucre",
+        "Fer la digestió"
+      ],
+      "correct": 1
+    },
+    {
+      "question": "Quin orgànul produeix energia per a la cèl·lula?",
+      "options": ["Ribosoma", "Mitocondri", "Nucli", "Membrana"],
+      "correct": 1
+    },
+    {
+      "question": "On es troba l'ADN en una cèl·lula eucariota?",
+      "options": ["Al vacúol", "Al nucli", "A la membrana", "Al citoplasma exterior"],
+      "correct": 1
+    },
+    {
+      "question": "Què fan els ribosomes?",
+      "options": [
+        "Produeixen proteïnes",
+        "Fan la respiració pulmonar",
+        "Guarden aigua",
+        "Produeixen llum"
+      ],
+      "correct": 0
+    },
+    {
+      "question": "La membrana cel·lular serveix per...",
+      "options": [
+        "Controlar què entra i què surt",
+        "Fer fotosíntesi",
+        "Fabricar ADN",
+        "Crear minerals"
+      ],
+      "correct": 0
+    },
+    {
+      "question": "Quin orgànul és típic de les cèl·lules vegetals i fa la fotosíntesi?",
+      "options": ["Mitocondri", "Ribosoma", "Cloroplast", "Lisosoma"],
+      "correct": 2
+    },
+    {
+      "question": "Què és el citoplasma?",
+      "options": [
+        "La part líquida interior on hi ha els orgànuls",
+        "La paret externa rígida",
+        "El material genètic",
+        "El motor del microscopi"
+      ],
+      "correct": 0
+    },
+    {
+      "question": "Quin orgànul modifica, empaqueta i distribueix substàncies?",
+      "options": ["Aparell de Golgi", "Nucli", "Vacúol", "Cili"],
+      "correct": 0
+    },
+    {
+      "question": "Les cèl·lules vegetals tenen...",
+      "options": [
+        "Paret cel·lular",
+        "Només nucli",
+        "Cap membrana",
+        "Cap orgànul"
+      ],
+      "correct": 0
+    },
+    {
+      "question": "El transport actiu necessita...",
+      "options": ["Energia", "Només llum", "Sorra", "Oxigen líquid"],
+      "correct": 0
+    }
+  ]
+}
+
+
+
+
+
+
+

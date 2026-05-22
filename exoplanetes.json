@@ -1,0 +1,142 @@
+
+
+{
+  "id": "exoplanetes",
+  "title": "EXOCURSA",
+  "subtitle": "Viatja per la galàxia descobrint exoplanetes.",
+  "emoji": "🪐",
+  "shortDescription": "Preguntes i recorregut sobre astronomia i exoplanetes.",
+  "victoryTitle": "Has arribat a l'exoplaneta habitable!",
+  "innerDecorations": ["🌟", "🌌", "🪐", "⭐", "🔭", "✨", "🛰️", "☄️"],
+  "rules": {
+    "correctAdvance": 2,
+    "wrongBack": 2,
+    "specialAdvance": 3,
+    "specialBack": 3,
+    "exactGoalRequired": false
+  },
+  "items": [
+    ["🚀", "Sortida (Terra)"],
+    ["🌍", "Espai profund"],
+    ["✨", "Nebulosa"],
+    ["❓", "Estació de recerca"],
+    ["🌌", "Via Làctia"],
+    ["💫", "Supernova impulsora"],
+    ["🔭", "Observatori"],
+    ["❓", "Base Kepler"],
+    ["⭐", "Estrella binària"],
+    ["🕳️", "Forat negre"],
+    ["🪐", "Gegant gasós"],
+    ["❓", "Laboratori TESS"],
+    ["☄️", "Cinturó d'asteroides"],
+    ["💫", "Vent estel·lar"],
+    ["🌠", "Estel fugaç"],
+    ["❓", "Mòdul científic"],
+    ["🛰️", "Satèl·lit"],
+    ["🕳️", "Forat de cuc inestable"],
+    ["🌑", "Planeta rocós"],
+    ["❓", "Centre de dades"],
+    ["💧", "Zona habitable"],
+    ["💫", "Raig còsmic"],
+    ["🧊", "Planeta gelat"],
+    ["❓", "Arxiu astronòmic"],
+    ["🔥", "Júpiter calent"],
+    ["🕳️", "Gravetat extrema"],
+    ["🧬", "Biomarcadors"],
+    ["🏆", "Exoplaneta habitable"]
+  ],
+  "questions": [
+    {
+      "question": "Què és un exoplaneta?",
+      "options": [
+        "Un planeta del sistema solar",
+        "Un planeta que orbita una altra estrella",
+        "Una estrella petita",
+        "Un satèl·lit artificial"
+      ],
+      "correct": 1
+    },
+    {
+      "question": "Quin telescopi ha descobert molts exoplanetes?",
+      "options": ["Kepler", "Apollo", "Sputnik", "Voyager"],
+      "correct": 0
+    },
+    {
+      "question": "Quin mètode detecta un planeta quan passa davant de la seva estrella?",
+      "options": ["Mètode de trànsit", "Mètode sísmic", "Mètode sonar", "Mètode químic"],
+      "correct": 0
+    },
+    {
+      "question": "Què és la zona habitable?",
+      "options": [
+        "La zona més freda de l'estrella",
+        "La regió on podria existir aigua líquida",
+        "La part interior del planeta",
+        "La corona solar"
+      ],
+      "correct": 1
+    },
+    {
+      "question": "Què és un Júpiter calent?",
+      "options": [
+        "Un cometa molt gran",
+        "Un gegant gasós molt a prop de la seva estrella",
+        "Un planeta de gel",
+        "Una estrella petita"
+      ],
+      "correct": 1
+    },
+    {
+      "question": "Quina característica és clau per a la vida tal com la coneixem?",
+      "options": ["Anells", "Aigua líquida", "Moltes llunes", "Color blau"],
+      "correct": 1
+    },
+    {
+      "question": "Per què costa veure exoplanetes directament?",
+      "options": [
+        "Són massa llunyans i la llum de l'estrella els enlluerna",
+        "No existeixen",
+        "Tenen llum pròpia molt intensa",
+        "Només es veuen de dia"
+      ],
+      "correct": 0
+    },
+    {
+      "question": "Pròxima Centauri b és important perquè...",
+      "options": [
+        "És al sistema solar",
+        "És un exoplaneta proper",
+        "És una galàxia",
+        "És un satèl·lit de Mart"
+      ],
+      "correct": 1
+    },
+    {
+      "question": "Què és una superterra?",
+      "options": [
+        "Un planeta rocós més massiu que la Terra",
+        "Un planeta exactament igual a la Terra",
+        "Una estrella gegant",
+        "Un asteroide"
+      ],
+      "correct": 0
+    },
+    {
+      "question": "TESS és una missió dedicada a...",
+      "options": [
+        "Buscar exoplanetes",
+        "Anar a la Lluna",
+        "Estudiar volcans",
+        "Mesurar terratrèmols"
+      ],
+      "correct": 0
+    }
+  ]
+}
+
+
+
+
+
+
+
