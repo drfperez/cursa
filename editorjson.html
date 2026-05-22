@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Editor JSON de Joc — versió millorada</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --bg-2: #020617;
+      --card: #111827;
+      --card-2: #1f2937;
+      --text: #e5e7eb;
+      --muted: #94a3b8;
+      --accent: #38bdf8;
+      --accent-2: #22c55e;
+      --danger: #ef4444;
+      --danger-soft: rgba(239,68,68,.12);
+      --warn: #f59e0b;
+      --warn-soft: rgba(245,158,11,.12);
+      --ok: #10b981;
+      --ok-soft: rgba(16,185,129,.12);
+      --border: #334155;
+      --focus: #7dd3fc;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      background: linear-gradient(180deg, var(--bg-2) 0%, var(--bg) 100%);
+      color: var(--text);
+    }
+    .toolbar {
+      position: sticky; top: 0; z-index: 20;
+      background: rgba(2,6,23,.9);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 18px;
+      display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; align-items: center;
+    }
+    .toolbar .left, .toolbar .right { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+    .container { max-width: 1320px; margin: 0 auto; padding: 20px; }
+    .grid { display: grid; grid-template-columns: 1.2fr .8fr; gap: 18px; align-items: start; }
+    @media (max-width: 1100px) { .grid { grid-template-columns: 1fr; } }
+    .card {
+      background: rgba(17,24,39,.95);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,.22);
+    }
+    .card + .card { margin-top: 18px; }
+    .section-title {
+      display: flex; justify-content: space-between; gap: 10px; align-items: center; margin-bottom: 12px;
+    }
+    h1, h2, h3 { margin: 0; }
+    h1 { font-size: 1.35rem; }
+    h2 { font-size: 1.08rem; }
+    .badge, .pill {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 7px 10px; border-radius: 999px; font-size: .88rem;
+      border: 1px solid var(--border); background: #0b1220; color: #dbeafe;
+    }
+    .badge.error { background: var(--danger-soft); border-color: #7f1d1d; color: #fecaca; }
+    .badge.ok { background: var(--ok-soft); border-color: #065f46; color: #a7f3d0; }
+    button, .file-label {
+      appearance: none;
+      border: 1px solid var(--border);
+      color: white; background: var(--card-2);
+      padding: 10px 14px; border-radius: 10px; cursor: pointer; font-weight: 600;
+    }
+    button:hover, .file-label:hover { filter: brightness(1.06); }
+    button.primary { background: var(--accent); color: #082f49; border-color: #7dd3fc; }
+    button.success { background: var(--accent-2); color: #052e16; border-color: #86efac; }
+    button.warn { background: var(--warn); color: #451a03; border-color: #fcd34d; }
+    button.danger { background: var(--danger); color: #fff; border-color: #fca5a5; }
+    button.small { padding: 7px 10px; border-radius: 8px; font-size: .9rem; }
+    input[type=file] { display: none; }
+    .status { color: #93c5fd; font-size: .92rem; }
+
+    .form-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 12px; }
+    @media (max-width: 720px) { .form-grid { grid-template-columns: 1fr; } }
+    .full { grid-column: 1 / -1; }
+    .field { display: flex; flex-direction: column; gap: 6px; }
+    label { color: #cbd5e1; font-size: .95rem; }
+    .hint { color: var(--muted); font-size: .85rem; }
+    input[type=text], input[type=number], textarea, select {
+      width: 100%; background: #0b1220; border: 1px solid var(--border); color: var(--text);
+      padding: 10px 12px; border-radius: 10px; outline: none; transition: border-color .15s, box-shadow .15s, background .15s;
+    }
+    input:focus, select:focus, textarea:focus { border-color: var(--focus); box-shadow: 0 0 0 3px rgba(56,189,248,.15); }
+    input.invalid, textarea.invalid, select.invalid { border-color: var(--danger); background: rgba(127,29,29,.14); }
+    .field.invalid > label { color: #fecaca; }
+    .error-text { color: #fca5a5; font-size: .84rem; min-height: 1.1em; }
+
+    .list { display: flex; flex-direction: column; gap: 12px; }
+    .row-card {
+      border: 1px solid var(--border); background: #0b1220; border-radius: 14px; padding: 12px;
+    }
+    .row-card.invalid { border-color: var(--danger); box-shadow: inset 0 0 0 1px rgba(239,68,68,.15); }
+    .row-card.valid { border-color: #14532d; }
+    .row { display: grid; grid-template-columns: 120px 1fr auto; gap: 10px; align-items: end; }
+    .row.question-row { grid-template-columns: 1fr 180px; }
+    .options-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 10px; margin-top: 10px; }
+    @media (max-width: 700px) {
+      .row, .row.question-row, .options-grid { grid-template-columns: 1fr; }
+    }
+    .inline-actions { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+    .item-meta { display: flex; justify-content: space-between; gap: 10px; margin-bottom: 8px; align-items: center; }
+    .mini-label { color: var(--muted); font-size: .84rem; }
+    pre {
+      background: #020617; border: 1px solid var(--border); color: #d1fae5; padding: 14px; border-radius: 12px;
+      overflow: auto; max-height: 560px; margin: 0; white-space: pre-wrap; word-break: break-word;
+    }
+    .summary {
+      margin: 0; padding-left: 18px; color: #fecaca; line-height: 1.45;
+    }
+    .summary li { margin-bottom: 6px; }
+    .summary.empty { color: #a7f3d0; padding-left: 18px; }
+    .sticky-side { position: sticky; top: 78px; }
+    .footer-note { color: var(--muted); font-size: .92rem; margin-top: 10px; }
+    .divider { height: 1px; background: var(--border); margin: 14px 0; }
+  </style>
+</head>
+<body>
+  <div class="toolbar">
+    <div class="left">
+      <button class="primary" id="btnSample">Carrega exemple</button>
+      <label class="file-label" for="fileInput">Carrega JSON</label>
+      <input id="fileInput" type="file" accept="application/json,.json" />
+      <button class="success" id="btnDownload">Descarrega JSON</button>
+    </div>
+    <div class="right">
+      <span class="pill">Versió millorada: duplicar + validació visual</span>
+      <span id="status" class="status">Preparat</span>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="grid">
+      <div>
+        <div class="card">
+          <div class="section-title">
+            <h1>Dades generals</h1>
+            <span id="generalBadge" class="badge">Capçalera</span>
+          </div>
+          <div class="form-grid">
+            <div class="field" data-field="id">
+              <label for="id">id *</label>
+              <input id="id" type="text" placeholder="exoplanetes" />
+              <div class="error-text"></div>
+            </div>
+            <div class="field" data-field="emoji">
+              <label for="emoji">emoji *</label>
+              <input id="emoji" type="text" placeholder="🪐" />
+              <div class="error-text"></div>
+            </div>
+            <div class="field" data-field="title">
+              <label for="title">title *</label>
+              <input id="title" type="text" placeholder="EXOCURSA" />
+              <div class="error-text"></div>
+            </div>
+            <div class="field" data-field="subtitle">
+              <label for="subtitle">subtitle *</label>
+              <input id="subtitle" type="text" placeholder="Viatja per la galàxia..." />
+              <div class="error-text"></div>
+            </div>
+            <div class="field full" data-field="shortDescription">
+              <label for="shortDescription">shortDescription *</label>
+              <input id="shortDescription" type="text" placeholder="Preguntes i recorregut sobre astronomia..." />
+              <div class="error-text"></div>
+            </div>
+            <div class="field full" data-field="victoryTitle">
+              <label for="victoryTitle">victoryTitle *</label>
+              <input id="victoryTitle" type="text" placeholder="Has arribat a l'exoplaneta habitable!" />
+              <div class="error-text"></div>
+            </div>
+            <div class="field full" data-field="innerDecorations">
+              <label for="innerDecorations">innerDecorations *</label>
+              <input id="innerDecorations" type="text" placeholder="🌟, 🌌, 🪐, ⭐, 🔭, ✨, 🛰️, ☄️" />
+              <div class="hint">Separa els emojis amb comes. Cal almenys un valor.</div>
+              <div class="error-text"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="section-title">
+            <h2>Regles</h2>
+            <span id="rulesBadge" class="badge">rules</span>
+          </div>
+          <div class="form-grid">
+            <div class="field" data-field="correctAdvance">
+              <label for="correctAdvance">correctAdvance *</label>
+              <input id="correctAdvance" type="number" step="1" min="0" />
+              <div class="error-text"></div>
+            </div>
+            <div class="field" data-field="wrongBack">
+              <label for="wrongBack">wrongBack *</label>
+              <input id="wrongBack" type="number" step="1" min="0" />
+              <div class="error-text"></div>
+            </div>
+            <div class="field" data-field="specialAdvance">
+              <label for="specialAdvance">specialAdvance *</label>
+              <input id="specialAdvance" type="number" step="1" min="0" />
+              <div class="error-text"></div>
+            </div>
+            <div class="field" data-field="specialBack">
+              <label for="specialBack">specialBack *</label>
+              <input id="specialBack" type="number" step="1" min="0" />
+              <div class="error-text"></div>
+            </div>
+            <div class="field" data-field="exactGoalRequired">
+              <label for="exactGoalRequired">exactGoalRequired *</label>
+              <select id="exactGoalRequired">
+                <option value="false">false</option>
+                <option value="true">true</option>
+              </select>
+              <div class="error-text"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="section-title">
+            <h2>Caselles / recorregut</h2>
+            <span id="itemsBadge" class="badge">items</span>
+          </div>
+          <div id="itemsList" class="list"></div>
+          <div class="inline-actions" style="margin-top: 12px;">
+            <button id="addItem" class="small">+ Afegeix casella</button>
+          </div>
+        </div>
+
+        <div class="card" style="margin-bottom: 40px;">
+          <div class="section-title">
+            <h2>Preguntes</h2>
+            <span id="questionsBadge" class="badge">questions</span>
+          </div>
+          <div id="questionsList" class="list"></div>
+          <div class="inline-actions" style="margin-top: 12px;">
+            <button id="addQuestion" class="small">+ Afegeix pregunta</button>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="sticky-side">
+          <div class="card">
+            <div class="section-title">
+              <h2>Validació</h2>
+              <span id="validationBadge" class="badge ok">Sense errors</span>
+            </div>
+            <ul id="validationSummary" class="summary empty">
+              <li>Tot correcte.</li>
+            </ul>
+            <div class="footer-note">Els camps amb error es marquen en vermell. Si prems “Descarrega JSON” amb errors, es bloquejarà la descàrrega.</div>
+          </div>
+
+          <div class="card">
+            <div class="section-title">
+              <h2>Vista prèvia del JSON</h2>
+              <span class="badge">temps real</span>
+            </div>
+            <pre id="jsonPreview">{}</pre>
+            <div class="footer-note">Aquest JSON es genera automàticament mentre edites els camps.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const sampleData = {
+      "id": "exoplanetes",
+      "title": "EXOCURSA",
+      "subtitle": "Viatja per la galàxia descobrint exoplanetes.",
+      "emoji": "🪐",
+      "shortDescription": "Preguntes i recorregut sobre astronomia i exoplanetes.",
+      "victoryTitle": "Has arribat a l'exoplaneta habitable!",
+      "innerDecorations": ["🌟", "🌌", "🪐", "⭐", "🔭", "✨", "🛰️", "☄️"],
+      "rules": { "correctAdvance": 2, "wrongBack": 2, "specialAdvance": 3, "specialBack": 3, "exactGoalRequired": false },
+      "items": [
+        ["🚀", "Sortida (Terra)"], ["🌍", "Espai profund"], ["✨", "Nebulosa"], ["❓", "Estació de recerca"],
+        ["🌌", "Via Làctia"], ["💫", "Supernova impulsora"], ["🔭", "Observatori"], ["❓", "Base Kepler"],
+        ["⭐", "Estrella binària"], ["🕳️", "Forat negre"], ["🪐", "Gegant gasós"], ["❓", "Laboratori TESS"],
+        ["☄️", "Cinturó d'asteroides"], ["💫", "Vent estel·lar"], ["🌠", "Estel fugaç"], ["❓", "Mòdul científic"],
+        ["🛰️", "Satèl·lit"], ["🕳️", "Forat de cuc inestable"], ["🌑", "Planeta rocós"], ["❓", "Centre de dades"],
+        ["💧", "Zona habitable"], ["💫", "Raig còsmic"], ["🧊", "Planeta gelat"], ["❓", "Arxiu astronòmic"],
+        ["🔥", "Júpiter calent"], ["🕳️", "Gravetat extrema"], ["🧬", "Biomarcadors"], ["🏆", "Exoplaneta habitable"]
+      ],
+      "questions": [
+        { "question": "Què és un exoplaneta?", "options": ["Un planeta del sistema solar", "Un planeta que orbita una altra estrella", "Una estrella petita", "Un satèl·lit artificial"], "correct": 1 },
+        { "question": "Quin telescopi ha descobert molts exoplanetes?", "options": ["Kepler", "Apollo", "Sputnik", "Voyager"], "correct": 0 },
+        { "question": "Quin mètode detecta un planeta quan passa davant de la seva estrella?", "options": ["Mètode de trànsit", "Mètode sísmic", "Mètode sonar", "Mètode químic"], "correct": 0 },
+        { "question": "Què és la zona habitable?", "options": ["La zona més freda de l'estrella", "La regió on podria existir aigua líquida", "La part interior del planeta", "La corona solar"], "correct": 1 },
+        { "question": "Què és un Júpiter calent?", "options": ["Un cometa molt gran", "Un gegant gasós molt a prop de la seva estrella", "Un planeta de gel", "Una estrella petita"], "correct": 1 },
+        { "question": "Quina característica és clau per a la vida tal com la coneixem?", "options": ["Anells", "Aigua líquida", "Moltes llunes", "Color blau"], "correct": 1 },
+        { "question": "Per què costa veure exoplanetes directament?", "options": ["Són massa llunyans i la llum de l'estrella els enlluerna", "No existeixen", "Tenen llum pròpia molt intensa", "Només es veuen de dia"], "correct": 0 },
+        { "question": "Pròxima Centauri b és important perquè...", "options": ["És al sistema solar", "És un exoplaneta proper", "És una galàxia", "És un satèl·lit de Mart"], "correct": 1 },
+        { "question": "Què és una superterra?", "options": ["Un planeta rocós més massiu que la Terra", "Un planeta exactament igual a la Terra", "Una estrella gegant", "Un asteroide"], "correct": 0 },
+        { "question": "TESS és una missió dedicada a...", "options": ["Buscar exoplanetes", "Anar a la Lluna", "Estudiar volcans", "Mesurar terratrèmols"], "correct": 0 }
+      ]
+    };
+
+    const $ = (id) => document.getElementById(id);
+    const itemsList = $('itemsList');
+    const questionsList = $('questionsList');
+    const statusEl = $('status');
+
+    function setStatus(text, timeout = 2500) {
+      statusEl.textContent = text;
+      setTimeout(() => { if (statusEl.textContent === text) statusEl.textContent = 'Preparat'; }, timeout);
+    }
+
+    function escapeHtml(str) {
+      return String(str)
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;');
+    }
+
+    function fieldWrap(id) {
+      return document.querySelector(`.field[data-field="${id}"]`);
+    }
+
+    function setFieldError(id, message = '') {
+      const wrap = fieldWrap(id);
+      if (!wrap) return;
+      const input = wrap.querySelector('input, select, textarea');
+      const error = wrap.querySelector('.error-text');
+      const invalid = Boolean(message);
+      wrap.classList.toggle('invalid', invalid);
+      if (input) input.classList.toggle('invalid', invalid);
+      if (error) error.textContent = message || '';
+    }
+
+    function createItemRow(item = ['', '']) {
+      const wrap = document.createElement('div');
+      wrap.className = 'row-card';
+      wrap.innerHTML = `
+        <div class="item-meta">
+          <div class="mini-label">Casella</div>
+          <div class="inline-actions">
+            <button class="small duplicate-item" type="button">Duplicar</button>
+            <button class="small move-up" type="button">↑</button>
+            <button class="small move-down" type="button">↓</button>
+            <button class="small danger remove-item" type="button">Elimina</button>
+          </div>
+        </div>
+        <div class="row item-row">
+          <div class="field inner-field emoji-field">
+            <label>Emoji *</label>
+            <input type="text" class="item-emoji" value="${escapeHtml(item[0] ?? '')}" placeholder="🚀" />
+            <div class="error-text"></div>
+          </div>
+          <div class="field inner-field text-field">
+            <label>Text *</label>
+            <input type="text" class="item-text" value="${escapeHtml(item[1] ?? '')}" placeholder="Nom de la casella" />
+            <div class="error-text"></div>
+          </div>
+          <div></div>
+        </div>`;
+      bindItemButtons(wrap);
+      wrap.querySelectorAll('input').forEach(el => el.addEventListener('input', refresh));
+      return wrap;
+    }
+
+    function createQuestionRow(q = { question: '', options: ['', '', '', ''], correct: 0 }) {
+      const opts = Array.isArray(q.options) ? [...q.options] : ['', '', '', ''];
+      while (opts.length < 4) opts.push('');
+      const correct = Number.isInteger(q.correct) ? Math.min(3, Math.max(0, q.correct)) : 0;
+      const wrap = document.createElement('div');
+      wrap.className = 'row-card';
+      wrap.innerHTML = `
+        <div class="item-meta">
+          <div class="mini-label">Pregunta</div>
+          <div class="inline-actions">
+            <button class="small duplicate-question" type="button">Duplicar</button>
+            <button class="small move-up" type="button">↑</button>
+            <button class="small move-down" type="button">↓</button>
+            <button class="small danger remove-item" type="button">Elimina</button>
+          </div>
+        </div>
+        <div class="row question-row">
+          <div class="field q-text-field">
+            <label>Pregunta *</label>
+            <input type="text" class="question-text" value="${escapeHtml(q.question ?? '')}" placeholder="Escriu la pregunta" />
+            <div class="error-text"></div>
+          </div>
+          <div class="field q-correct-field">
+            <label>Resposta correcta *</label>
+            <select class="question-correct">
+              <option value="0">Opció 1</option>
+              <option value="1">Opció 2</option>
+              <option value="2">Opció 3</option>
+              <option value="3">Opció 4</option>
+            </select>
+            <div class="error-text"></div>
+          </div>
+        </div>
+        <div class="options-grid">
+          <div class="field q-opt-field"><label>Opció 1 *</label><input type="text" class="question-opt" value="${escapeHtml(opts[0])}" /><div class="error-text"></div></div>
+          <div class="field q-opt-field"><label>Opció 2 *</label><input type="text" class="question-opt" value="${escapeHtml(opts[1])}" /><div class="error-text"></div></div>
+          <div class="field q-opt-field"><label>Opció 3 *</label><input type="text" class="question-opt" value="${escapeHtml(opts[2])}" /><div class="error-text"></div></div>
+          <div class="field q-opt-field"><label>Opció 4 *</label><input type="text" class="question-opt" value="${escapeHtml(opts[3])}" /><div class="error-text"></div></div>
+        </div>`;
+      wrap.querySelector('.question-correct').value = String(correct);
+      bindQuestionButtons(wrap);
+      wrap.querySelectorAll('input, select').forEach(el => el.addEventListener('input', refresh));
+      return wrap;
+    }
+
+    function bindMoveButtons(wrap, container) {
+      wrap.querySelector('.move-up').addEventListener('click', () => {
+        const prev = wrap.previousElementSibling;
+        if (prev) container.insertBefore(wrap, prev);
+        refresh();
+      });
+      wrap.querySelector('.move-down').addEventListener('click', () => {
+        const next = wrap.nextElementSibling;
+        if (next) container.insertBefore(next, wrap);
+        refresh();
+      });
+      wrap.querySelector('.remove-item').addEventListener('click', () => {
+        wrap.remove();
+        refresh();
+      });
+    }
+
+    function bindItemButtons(wrap) {
+      bindMoveButtons(wrap, itemsList);
+      wrap.querySelector('.duplicate-item').addEventListener('click', () => {
+        const clone = createItemRow([
+          wrap.querySelector('.item-emoji').value,
+          wrap.querySelector('.item-text').value
+        ]);
+        wrap.after(clone);
+        refresh();
+        setStatus('Casella duplicada');
+      });
+    }
+
+    function bindQuestionButtons(wrap) {
+      bindMoveButtons(wrap, questionsList);
+      wrap.querySelector('.duplicate-question').addEventListener('click', () => {
+        const clone = createQuestionRow({
+          question: wrap.querySelector('.question-text').value,
+          options: Array.from(wrap.querySelectorAll('.question-opt')).map(i => i.value),
+          correct: Number(wrap.querySelector('.question-correct').value)
+        });
+        wrap.after(clone);
+        refresh();
+        setStatus('Pregunta duplicada');
+      });
+    }
+
+    function collectData() {
+      return {
+        id: $('id').value.trim(),
+        title: $('title').value.trim(),
+        subtitle: $('subtitle').value.trim(),
+        emoji: $('emoji').value.trim(),
+        shortDescription: $('shortDescription').value.trim(),
+        victoryTitle: $('victoryTitle').value.trim(),
+        innerDecorations: $('innerDecorations').value.split(',').map(s => s.trim()).filter(Boolean),
+        rules: {
+          correctAdvance: Number($('correctAdvance').value),
+          wrongBack: Number($('wrongBack').value),
+          specialAdvance: Number($('specialAdvance').value),
+          specialBack: Number($('specialBack').value),
+          exactGoalRequired: $('exactGoalRequired').value === 'true'
+        },
+        items: Array.from(itemsList.querySelectorAll('.row-card')).map(card => [
+          card.querySelector('.item-emoji').value.trim(),
+          card.querySelector('.item-text').value.trim()
+        ]),
+        questions: Array.from(questionsList.querySelectorAll('.row-card')).map(card => ({
+          question: card.querySelector('.question-text').value.trim(),
+          options: Array.from(card.querySelectorAll('.question-opt')).map(i => i.value.trim()),
+          correct: Number(card.querySelector('.question-correct').value)
+        }))
+      };
+    }
+
+    function clearInnerErrors(container, selectors) {
+      container.querySelectorAll(selectors).forEach(el => {
+        el.classList.remove('invalid');
+        const field = el.closest('.field');
+        if (field) field.classList.remove('invalid');
+        const err = field?.querySelector('.error-text');
+        if (err) err.textContent = '';
+      });
+      container.classList.remove('invalid', 'valid');
+    }
+
+    function markFieldErrorFromEl(el, message) {
+      if (!el) return;
+      el.classList.add('invalid');
+      const field = el.closest('.field');
+      if (field) {
+        field.classList.add('invalid');
+        const err = field.querySelector('.error-text');
+        if (err) err.textContent = message;
+      }
+    }
+
+    function validateData(data) {
+      const errors = [];
+
+      // clear general field errors
+      ['id','emoji','title','subtitle','shortDescription','victoryTitle','innerDecorations','correctAdvance','wrongBack','specialAdvance','specialBack','exactGoalRequired']
+        .forEach(id => setFieldError(id, ''));
+
+      // general required text
+      const requiredText = [
+        ['id', 'El camp id és obligatori.'],
+        ['emoji', 'El camp emoji és obligatori.'],
+        ['title', 'El camp title és obligatori.'],
+        ['subtitle', 'El camp subtitle és obligatori.'],
+        ['shortDescription', 'El camp shortDescription és obligatori.'],
+        ['victoryTitle', 'El camp victoryTitle és obligatori.']
+      ];
+      requiredText.forEach(([id, msg]) => {
+        if (!String(data[id] ?? '').trim()) {
+          setFieldError(id, msg);
+          errors.push(msg);
+        }
+      });
+
+      if (!Array.isArray(data.innerDecorations) || data.innerDecorations.length === 0) {
+        const msg = 'innerDecorations ha de contenir almenys un valor.';
+        setFieldError('innerDecorations', msg);
+        errors.push(msg);
+      }
+
+      ['correctAdvance','wrongBack','specialAdvance','specialBack'].forEach(id => {
+        const value = Number(data.rules[id]);
+        if (!Number.isInteger(value) || value < 0) {
+          const msg = `${id} ha de ser un enter igual o superior a 0.`;
+          setFieldError(id, msg);
+          errors.push(msg);
+        }
+      });
+
+      // items
+      itemsList.querySelectorAll('.row-card').forEach((card, index) => {
+        clearInnerErrors(card, '.item-emoji, .item-text');
+        const emojiEl = card.querySelector('.item-emoji');
+        const textEl = card.querySelector('.item-text');
+        const emoji = emojiEl.value.trim();
+        const text = textEl.value.trim();
+        let invalid = false;
+        if (!emoji) {
+          invalid = true;
+          markFieldErrorFromEl(emojiEl, 'Emoji obligatori.');
+          errors.push(`Casella ${index + 1}: falta l'emoji.`);
+        }
+        if (!text) {
+          invalid = true;
+          markFieldErrorFromEl(textEl, 'Text obligatori.');
+          errors.push(`Casella ${index + 1}: falta el text.`);
+        }
+        card.classList.toggle('invalid', invalid);
+        card.classList.toggle('valid', !invalid);
+      });
+      if (data.items.length === 0) {
+        errors.push('Cal almenys una casella a items.');
+      }
+
+      // questions
+      questionsList.querySelectorAll('.row-card').forEach((card, index) => {
+        clearInnerErrors(card, '.question-text, .question-correct, .question-opt');
+        const qTextEl = card.querySelector('.question-text');
+        const correctEl = card.querySelector('.question-correct');
+        const optEls = Array.from(card.querySelectorAll('.question-opt'));
+        const qText = qTextEl.value.trim();
+        const correct = Number(correctEl.value);
+        let invalid = false;
+        if (!qText) {
+          invalid = true;
+          markFieldErrorFromEl(qTextEl, 'Pregunta obligatòria.');
+          errors.push(`Pregunta ${index + 1}: falta l'enunciat.`);
+        }
+        if (!Number.isInteger(correct) || correct < 0 || correct > 3) {
+          invalid = true;
+          markFieldErrorFromEl(correctEl, 'La resposta correcta ha d’estar entre 0 i 3.');
+          errors.push(`Pregunta ${index + 1}: índex de resposta correcta no vàlid.`);
+        }
+        const options = optEls.map(el => el.value.trim());
+        if (options.length !== 4) {
+          invalid = true;
+          errors.push(`Pregunta ${index + 1}: calen exactament 4 opcions.`);
+        }
+        optEls.forEach((el, i) => {
+          if (!el.value.trim()) {
+            invalid = true;
+            markFieldErrorFromEl(el, 'Opció obligatòria.');
+            errors.push(`Pregunta ${index + 1}: falta el text de l'opció ${i + 1}.`);
+          }
+        });
+        if (Number.isInteger(correct) && correct >= 0 && correct < options.length && !options[correct]) {
+          invalid = true;
+          markFieldErrorFromEl(correctEl, 'La resposta correcta apunta a una opció buida.');
+          errors.push(`Pregunta ${index + 1}: la resposta correcta apunta a una opció buida.`);
+        }
+        card.classList.toggle('invalid', invalid);
+        card.classList.toggle('valid', !invalid);
+      });
+      if (data.questions.length === 0) {
+        errors.push('Cal almenys una pregunta a questions.');
+      }
+
+      updateSectionBadges();
+      return errors;
+    }
+
+    function updateSectionBadges() {
+      const generalInvalid = document.querySelectorAll('.field.invalid').length;
+      const itemInvalid = itemsList.querySelectorAll('.row-card.invalid').length;
+      const questionInvalid = questionsList.querySelectorAll('.row-card.invalid').length;
+      updateBadge($('generalBadge'), generalInvalid ? 'Capçalera amb errors' : 'Capçalera correcta', !generalInvalid);
+      const rulesInvalid = ['correctAdvance','wrongBack','specialAdvance','specialBack','exactGoalRequired'].some(id => fieldWrap(id)?.classList.contains('invalid'));
+      updateBadge($('rulesBadge'), rulesInvalid ? 'rules amb errors' : 'rules correcte', !rulesInvalid);
+      updateBadge($('itemsBadge'), itemInvalid ? `${itemInvalid} caselles amb errors` : 'items correcte', !itemInvalid);
+      updateBadge($('questionsBadge'), questionInvalid ? `${questionInvalid} preguntes amb errors` : 'questions correcte', !questionInvalid);
+    }
+
+    function updateBadge(el, text, ok) {
+      el.textContent = text;
+      el.classList.toggle('ok', ok);
+      el.classList.toggle('error', !ok);
+    }
+
+    function renderValidation(errors) {
+      const summary = $('validationSummary');
+      const badge = $('validationBadge');
+      if (!errors.length) {
+        badge.textContent = 'Sense errors';
+        badge.classList.add('ok'); badge.classList.remove('error');
+        summary.className = 'summary empty';
+        summary.innerHTML = '<li>Tot correcte.</li>';
+        return;
+      }
+      badge.textContent = `${errors.length} error${errors.length === 1 ? '' : 's'}`;
+      badge.classList.remove('ok'); badge.classList.add('error');
+      summary.className = 'summary';
+      summary.innerHTML = errors.map(err => `<li>${escapeHtml(err)}</li>`).join('');
+    }
+
+    function refresh() {
+      const data = collectData();
+      $('jsonPreview').textContent = JSON.stringify(data, null, 2);
+      const errors = validateData(data);
+      renderValidation(errors);
+      return { data, errors };
+    }
+
+    function loadData(data) {
+      $('id').value = data.id ?? '';
+      $('title').value = data.title ?? '';
+      $('subtitle').value = data.subtitle ?? '';
+      $('emoji').value = data.emoji ?? '';
+      $('shortDescription').value = data.shortDescription ?? '';
+      $('victoryTitle').value = data.victoryTitle ?? '';
+      $('innerDecorations').value = Array.isArray(data.innerDecorations) ? data.innerDecorations.join(', ') : '';
+      $('correctAdvance').value = data.rules?.correctAdvance ?? 0;
+      $('wrongBack').value = data.rules?.wrongBack ?? 0;
+      $('specialAdvance').value = data.rules?.specialAdvance ?? 0;
+      $('specialBack').value = data.rules?.specialBack ?? 0;
+      $('exactGoalRequired').value = String(Boolean(data.rules?.exactGoalRequired));
+
+      itemsList.innerHTML = '';
+      (Array.isArray(data.items) ? data.items : []).forEach(item => itemsList.appendChild(createItemRow(item)));
+      if (!itemsList.children.length) itemsList.appendChild(createItemRow());
+
+      questionsList.innerHTML = '';
+      (Array.isArray(data.questions) ? data.questions : []).forEach(q => questionsList.appendChild(createQuestionRow(q)));
+      if (!questionsList.children.length) questionsList.appendChild(createQuestionRow());
+
+      refresh();
+    }
+
+    function downloadJson() {
+      const { data, errors } = refresh();
+      if (errors.length) {
+        setStatus('No es pot descarregar: hi ha errors de validació', 3500);
+        alert('No es pot descarregar el JSON perquè hi ha errors de validació. Revisa el panell de “Validació”.');
+        return;
+      }
+      const json = JSON.stringify(data, null, 2);
+      const blob = new Blob([json], { type: 'application/json;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `${data.id || 'joc'}.json`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+      setStatus('JSON descarregat');
+    }
+
+    function handleFile(file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        try {
+          const data = JSON.parse(reader.result);
+          loadData(data);
+          setStatus(`JSON carregat: ${file.name}`);
+        } catch (err) {
+          console.error(err);
+          alert('El fitxer no conté un JSON vàlid.');
+        }
+      };
+      reader.readAsText(file, 'utf-8');
+    }
+
+    document.querySelectorAll('input, select').forEach(el => el.addEventListener('input', refresh));
+    $('addItem').addEventListener('click', () => { itemsList.appendChild(createItemRow()); refresh(); });
+    $('addQuestion').addEventListener('click', () => { questionsList.appendChild(createQuestionRow()); refresh(); });
+    $('btnSample').addEventListener('click', () => { loadData(sampleData); setStatus('Exemple carregat'); });
+    $('btnDownload').addEventListener('click', downloadJson);
+    $('fileInput').addEventListener('change', (e) => {
+      const file = e.target.files?.[0];
+      if (file) handleFile(file);
+      e.target.value = '';
+    });
+
+    loadData(sampleData);
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
